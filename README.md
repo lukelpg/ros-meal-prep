@@ -12,6 +12,7 @@ colcon build
 ``` 
 source install/setup.bash
 ```
+Example running stepper node:
 ``` 
 ros2 run stepper_pkg stepper
 ``` 
