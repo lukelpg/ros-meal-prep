@@ -8,22 +8,22 @@ sudo apt update && sudo apt upgrade -y
 
 # Install prerequisites
 echo "Installing prerequisites..."
-sudo apt install -y \
-  curl \
-  gnupg2 \
-  lsb-release \
-  build-essential \
-  locales \
-  bash-completion \
-  git \
-  wget \
-  unzip \
-  python3-pip \
-  python3-colcon-common-extensions \
-  python3-rosdep \
-  python3-vcstool \
-  python3-argparse \
-  ros-dev-tools
+sudo apt install -y curl
+sudo apt install -y gnupg2
+sudo apt install -y lsb-release
+sudo apt install -y build-essential
+sudo apt install -y locales
+sudo apt install -y bash-completion
+sudo apt install -y git
+sudo apt install -y wget
+sudo apt install -y unzip
+sudo apt install -y python3-pip
+sudo apt install -y python3-colcon-common-extensions
+sudo apt install -y python3-rosdep
+sudo apt install -y python3-vcstool
+sudo apt install -y python3-argparse
+sudo apt install -y ros-dev-tools
+
 
 # Set up the locale to ensure it works properly
 echo "Setting up locale..."
