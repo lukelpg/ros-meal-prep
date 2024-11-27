@@ -4,10 +4,12 @@
 
 # Make sure the system is up to date
 echo "Updating system..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update
+sudo apt upgrade -y
 
 # Install prerequisites
 echo "Installing prerequisites..."
+sudo apt install -y python3
 sudo apt install -y curl
 sudo apt install -y gnupg2
 sudo apt install -y lsb-release
@@ -18,11 +20,9 @@ sudo apt install -y git
 sudo apt install -y wget
 sudo apt install -y unzip
 sudo apt install -y python3-pip
-sudo apt install -y python3-colcon-common-extensions
-sudo apt install -y python3-rosdep
-sudo apt install -y python3-vcstool
-sudo apt install -y python3-argparse
-sudo apt install -y ros-dev-tools
+python3 -m pip install python3-colcon-common-extensions
+# sudo apt install -y python3-vcstool
+# sudo apt install -y python3-argparse
 
 
 # Set up the locale to ensure it works properly
@@ -44,6 +44,7 @@ sudo apt update
 # Install ROS 2 Humble Desktop for ARM
 echo "Installing ROS 2 Humble..."
 sudo apt install -y ros-humble-desktop
+sudo apt install ros-dev-tools
 
 # Setup environment variables
 echo "Setting up ROS 2 environment variables..."
