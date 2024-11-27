@@ -3,17 +3,19 @@ This is a repo for a ROS2 enviornment used for interfacing with sensors and actu
 
 ## Install
 
-Form top level of repo:
+From top level of repo:
 ``` 
 sudo bash installer.sh
 ``` 
 
 ## Run
 
-From top level of repo:
-
+From top level of repo
 ``` 
-sudo bash build.sh
+colcon build
+```
+``` 
+source install/setup.bash
 ```
 
 Example running stepper node:
