@@ -1,17 +1,21 @@
 # ros-meal-prep
 This is a repo for a ROS2 enviornment used for interfacing with sensors and actuators to make a meal prep robot
 
+## Install
+
+Form top level of repo:
+``` 
+sudo bash installer.sh
+``` 
 
 ## Run
 
-Go to top level of repo
+From top level of repo:
 
 ``` 
-colcon build
+sudo bash build.sh
 ```
-``` 
-source install/setup.bash
-```
+
 Example running stepper node:
 ``` 
 ros2 run stepper_pkg stepper
