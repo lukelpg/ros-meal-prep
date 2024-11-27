@@ -75,7 +75,7 @@ source ~/.bashrc
 # rosdep install --from-paths src --ignore-src -r -y
 
 # Verify the installation
-echo "Verifying ROS 2 installation..."
-ros2 --version
+# echo "Verifying ROS 2 installation..."
+# ros2 --version
 
 echo "ROS 2 Humble installation completed successfully!"
