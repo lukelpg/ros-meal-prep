@@ -31,15 +31,20 @@ sudo update-locale LANG=C.UTF-8
 
 # Add ROS 2 repository keys
 echo "Adding ROS 2 repository keys..."
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sudo tee /etc/apt/trusted.gpg.d/ros.asc
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+sudo apt update && sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+# sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sudo tee /etc/apt/trusted.gpg.d/ros.asc
 
 # Add ROS 2 repository to sources list
 echo "Adding ROS 2 repository..."
-sudo sh -c 'echo "deb [arch=arm64] https://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2.list'
-
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 # Update package index
 echo "Updating package index..."
 sudo apt update
+sudo apt upgrade
 
 # Install ROS 2 Humble Desktop for ARM
 echo "Installing ROS 2 Humble..."
