@@ -36,6 +36,7 @@ def stepper_rotate(steps, delay=0.01):
             GPIO.output(IN2, step[1])
             GPIO.output(IN3, step[2])
             GPIO.output(IN4, step[3])
+            print("stepped")
             time.sleep(delay)
 
 # Rotate the stepper motor 512 steps (one full rotation) with a delay of 0.01 seconds between steps
