@@ -79,3 +79,6 @@ source ~/.bashrc
 # ros2 --version
 
 echo "ROS 2 Humble installation completed successfully!"
+
+sudo pip3 install RPi.GPIO
+
