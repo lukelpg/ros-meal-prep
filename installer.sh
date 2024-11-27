@@ -20,7 +20,7 @@ sudo apt install -y git
 sudo apt install -y wget
 sudo apt install -y unzip
 sudo apt install -y python3-pip
-python3 -m pip install python3-colcon-common-extensions
+#python3 -m pip install python3-colcon-common-extensions
 # sudo apt install -y python3-vcstool
 # sudo apt install -y python3-argparse
 
