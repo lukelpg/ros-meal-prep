@@ -57,22 +57,22 @@ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 # Initialize rosdep
-echo "Initializing rosdep..."
-sudo rosdep init
-rosdep update
+# echo "Initializing rosdep..."
+# sudo rosdep init
+# rosdep update
 
-# Install additional development tools
-echo "Installing ROS development tools..."
-sudo apt install -y \
-  ros-humble-ros-base \
-  ros-humble-robot-state-publisher \
-  ros-humble-rviz2 \
-  ros-humble-teleop-twist-keyboard \
-  ros-humble-navigation2
+# # Install additional development tools
+# echo "Installing ROS development tools..."
+# sudo apt install -y \
+#   ros-humble-ros-base \
+#   ros-humble-robot-state-publisher \
+#   ros-humble-rviz2 \
+#   ros-humble-teleop-twist-keyboard \
+#   ros-humble-navigation2
 
-# Install dependencies using rosdep
-echo "Installing ROS 2 dependencies with rosdep..."
-rosdep install --from-paths src --ignore-src -r -y
+# # Install dependencies using rosdep
+# echo "Installing ROS 2 dependencies with rosdep..."
+# rosdep install --from-paths src --ignore-src -r -y
 
 # Verify the installation
 echo "Verifying ROS 2 installation..."
