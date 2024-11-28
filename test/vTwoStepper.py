@@ -11,17 +11,20 @@ GPIO.setmode(GPIO.BCM)
 for pin in pins:
     GPIO.setup(pin, GPIO.OUT)
 
-# Define the stepper motor sequence
-# This is a common 4-step sequence for a stepper motor
+# Define the stepper motor sequence (half-step)
 step_sequence = [
-    [1, 0, 0, 1],  # Step 1
+    [1, 0, 0, 0],  # Step 1
     [1, 1, 0, 0],  # Step 2
-    [0, 1, 1, 0],  # Step 3
-    [0, 0, 1, 1]   # Step 4
+    [0, 1, 0, 0],  # Step 3
+    [0, 1, 1, 0],  # Step 4
+    [0, 0, 1, 0],  # Step 5
+    [0, 0, 1, 1],  # Step 6
+    [0, 0, 0, 1],  # Step 7
+    [1, 0, 0, 1],  # Step 8
 ]
 
 # Function to perform the steps
-def step_motor(steps, delay=0.01):
+def step_motor(steps, delay=0.05):
     for i in range(steps):
         for step in step_sequence:
             for pin, val in zip(pins, step):
