@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'stepper = stepper_pkg.stepper:main'
+            'stepper = stepper_pkg.stepper:main',
+            'faceTrack = stepper_pkg.faceTrack:main'
         ],
     },
 )
