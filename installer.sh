@@ -82,6 +82,7 @@ echo "ROS 2 Humble installation completed successfully!"
 
 sudo apt install python3-rpi.gpio
 pip3 install opencv-python
-pip3 install adafruit-ads1x15
-sudo apt-get install i2c-tools python3-smbus
+pip3 install adafruit-ads1x15 # might not need this
+sudo apt-get install i2c-tools python3-smbus # might not need this
+sudo apt-get install python3-spidev
 
