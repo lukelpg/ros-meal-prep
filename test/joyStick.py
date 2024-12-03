@@ -22,32 +22,36 @@ GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Initialize SPI
 spi = spidev.SpiDev()
 spi.open(0, 0)  # Bus 0, Device 0 (chip select 0)
-spi.max_speed_hz = 50000  # SPI speed (can be adjusted as needed)
+spi.max_speed_hz = 100000  # SPI speed (adjustable)
+spi.mode = 0b00  # SPI mode 0 (CPOL=0, CPHA=0)
 
 # Function to read from ADC0834
 def read_adc(channel):
-    # ADC0834 command byte
-    # Start bit, single-ended (0), 8-bit mode (0), channel (0-1)
+    print("Channel: ", channel)
+    # ADC0834 command byte for single-ended read
     if channel == 0:
-        command = 0x86  # Read channel 0
+        command = 0x86  # Command to read channel 0 (VRX)
+    elif channel == 1:
+        command = 0x96  # Command to read channel 1 (VRY)
     else:
-        command = 0x96  # Read channel 1
+        raise ValueError("Invalid channel. Choose 0 or 1.")
     
-    # Pull CS low to select ADC
+    # Pull CS low to start communication
     GPIO.output(CS_PIN, GPIO.LOW)
-    
-    # Send the command byte
+
+    # Send command byte
     spi.xfer([command])
-    
-    # Receive 2 bytes from the ADC (8-bit data + 2 bits of control)
-    result = spi.xfer([0x00, 0x00])
-    
-    # Pull CS high to deselect ADC
+
+    # Read the response from the ADC (2 bytes)
+    result = spi.xfer([0x00, 0x00])  # Send dummy data to receive the result
+
+    # Pull CS high to end communication
     GPIO.output(CS_PIN, GPIO.HIGH)
-    
-    # Extract 8-bit data
-    # The first byte of the result is just control bits, so we need the second byte
-    return result[1]
+
+    # Combine the two result bytes into one 8-bit value
+    adc_value = result[1]  # The actual ADC value is in the second byte
+
+    return adc_value
 
 # Function to check if the joystick button is pressed
 def button_pressed():
