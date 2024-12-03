@@ -26,3 +26,11 @@ Example running stepper node:
 ros2 run stepper_pkg stepper
 ros2 run stepper_pkg faceTrack
 ``` 
+
+## Git Fix
+``` 
+git pull origin main
+``` 
+``` 
+git reset --hard origin/main
+``` 

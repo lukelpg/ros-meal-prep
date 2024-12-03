@@ -82,5 +82,5 @@ echo "ROS 2 Humble installation completed successfully!"
 
 sudo apt install python3-rpi.gpio
 pip3 install opencv-python
-
+pip3 install adafruit-ads1x15
 
