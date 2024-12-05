@@ -1,5 +1,6 @@
 #define joyX A0
 #define joyY A1
+
  
 void setup() {
   Serial.begin(9600);
@@ -14,8 +15,4 @@ void loop() {
   Serial.print(xValue);
   Serial.print("\t");
   Serial.println(yValue);
-
-  Serial.println("Hello from Arduino!");
-  delay(1000);
-
 }

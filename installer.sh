@@ -85,4 +85,5 @@ pip3 install opencv-python
 pip3 install adafruit-ads1x15 # might not need this
 sudo apt-get install i2c-tools python3-smbus # might not need this
 sudo apt-get install python3-spidev
+sudo python3 -m pip install pyserial
 
