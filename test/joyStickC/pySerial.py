@@ -21,7 +21,7 @@ def read_serial_data(ser):
 
 if __name__ == '__main__':
     try:
-        ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)  # Initialize serial port
+        ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)  # Initialize serial port
         ser.reset_input_buffer()  # Reset input buffer
         print("Serial connection established successfully.")
     except serial.SerialException as e:
