@@ -10,6 +10,7 @@
 AccelStepper motorY(1, MOTOR_Y_STEP_PIN, MOTOR_Y_DIR_PIN);
 
 int motorDirection = 0;
+bool home = false;
 
 void setup()
 {
@@ -21,8 +22,8 @@ void setup()
 
    motorY.setEnablePin(MOTOR_Y_ENABLE_PIN);
    motorY.setPinsInverted(false, false, true);
-   motorY.setAcceleration(100);
-   motorY.setMaxSpeed(500); // Set max speed for the motor
+   motorY.setAcceleration(1000);
+   motorY.setMaxSpeed(750); // Set max speed for the motor
    motorY.enableOutputs();
    
    // Explicitly set the direction of the motor on startup (choose a direction)
@@ -30,36 +31,25 @@ void setup()
 }
 
 
-void loop()
-{
-   // Check if the limit switch is pressed (it will read LOW when pressed due to the pull-up resistor)
-//   int switchState = digitalRead(LIMIT_SWITCH_PIN);  // Read the state of the limit switch
-//   Serial.println(switchState); 
-   
-//   if (digitalRead(LIMIT_SWITCH_PIN) == LOW) {
-//       // Reverse the direction of the motor
-//       motorY.setCurrentPosition(0);  // Optionally reset the current position to 0
-//       motorY.moveTo(-motorY.currentPosition()); // Move in the opposite direction
-//       while (motorY.distanceToGo() != 0) {
-//           motorY.run();  // Keep the motor running until it reaches the target position
-//       }
-//   }
-
-   // Otherwise, move the motor normally
-
-  if(digitalRead(LIMIT_SWITCH_PIN) == 1){
-    motorDirection = 1;
+void homeMotor() {
+  while (digitalRead(LIMIT_SWITCH_PIN) == 0) {
+    motorY.moveTo(20000);
+    motorY.run();
   }
 
-   
-
-   if(motorDirection == 0){
-    motorY.moveTo(7000);
-   }else{
-    motorY.moveTo(3000);
-    }
+  motorY.setCurrentPosition(0);             
+  motorY.stop();
+}
 
 
-    
-   motorY.run();
+void loop()
+{
+  if (home == false){
+    homeMotor();
+    home = true;
+  }else{
+    motorY.moveTo(-6000);
+    motorY.run();
+  }
+
 }
