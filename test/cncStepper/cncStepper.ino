@@ -66,6 +66,7 @@ void homeMotors() {
   while (!xHomed || !yHomed || !zHomed) {
     if (!xHomed) {
       if (digitalRead(LIMIT_SWITCH_PIN_X) == 0) {
+        Serial.println(digitalRead(LIMIT_SWITCH_PIN_X));
         motorX.moveTo(20000);
         motorX.run();
       } else {
