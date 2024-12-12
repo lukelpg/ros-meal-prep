@@ -48,7 +48,7 @@ void setup()
 
    motorZ.setPinsInverted(false, false, true);
    motorZ.setAcceleration(1000);
-   motorZ.setMaxSpeed(800); // Set max speed for the motor
+   motorZ.setMaxSpeed(1000); // Set max speed for the motor
    motorZ.enableOutputs();
    
    // Explicitly set the direction of the motor on startup (choose a direction)
@@ -58,52 +58,64 @@ void setup()
 }
 
 
-void homeMotor() {
-
-//  Serial.println(digitalRead(LIMIT_SWITCH_PIN_X));
+void homeMotors() {
+  bool xHomed = false;
+  bool yHomed = false;
+  bool zHomed = false;
   
-  while (digitalRead(LIMIT_SWITCH_PIN_X) == 0) {
-    Serial.println(digitalRead(LIMIT_SWITCH_PIN_X));
-    motorX.moveTo(20000);
+  while (!xHomed || !yHomed || !zHomed) {
+    if (!xHomed) {
+      if (digitalRead(LIMIT_SWITCH_PIN_X) == 0) {
+        motorX.moveTo(20000);
+        motorX.run();
+      } else {
+        motorX.setCurrentPosition(0);
+        motorX.stop();
+        xHomed = true;
+      }
+    }
+    
+    if (!yHomed) {
+      if (digitalRead(LIMIT_SWITCH_PIN_Y) == 0) {
+        motorY.moveTo(20000);
+        motorY.run();
+      } else {
+        motorY.setCurrentPosition(0);
+        motorY.stop();
+        yHomed = true;
+      }
+    }
+    
+    if (!zHomed) {
+      if (digitalRead(LIMIT_SWITCH_PIN_Z) == 0) {
+        motorZ.moveTo(-20000);
+        motorZ.run();
+      } else {
+        motorZ.setCurrentPosition(0);
+        motorZ.stop();
+        zHomed = true;
+      }
+    }
+  }
+  
+  // Move motors to final positions
+  motorX.moveTo(-100);
+  motorY.moveTo(-100);
+  motorZ.moveTo(100);
+
+  while (motorX.distanceToGo() != 0 || motorY.distanceToGo() != 0 || motorZ.distanceToGo() != 0) {
     motorX.run();
-  }
-
-  motorX.setCurrentPosition(0);             
-  motorX.stop();
-  
-  while (digitalRead(LIMIT_SWITCH_PIN_Y) == 0) {
-    motorY.moveTo(20000);
     motorY.run();
-  }
-
-  motorY.setCurrentPosition(0);             
-  motorY.stop();
-
-  while (digitalRead(LIMIT_SWITCH_PIN_Z) == 0) {
-    motorZ.moveTo(-20000);
     motorZ.run();
   }
-  
-  motorZ.setCurrentPosition(0);             
-  motorZ.stop();
 }
 
 
 void loop()
 {
   if (home == false){
-    homeMotor();
+    homeMotors();
     home = true;
-  }else{
-//    Serial.println(digitalRead(LIMIT_SWITCH_PIN_X));
-    motorX.moveTo(-1000);
-    motorX.run();
-
-    motorY.moveTo(-1000);
-    motorY.run();
-
-    motorZ.moveTo(6000);
-    motorZ.run();
   }
 
 }
