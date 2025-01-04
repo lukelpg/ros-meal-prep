@@ -9,16 +9,39 @@ StepperMotorControl motorZ(4, 7, 8, 11, -20000); // Z motor
 // Create the RobotControl object
 RobotControl robot(&motorX, &motorY, &motorZ);
 
+// Function to generate random waypoints within the defined bounds
+void generateRandomWaypoints(int numWaypoints) {
+    for (int i = 0; i < numWaypoints; i++) {
+        // Generate random coordinates within the defined bounds
+        int x = random(-1000, 1);  // x in range [0, -1000]
+        int y = random(-1000, 1);  // y in range [0, -1000]
+        int z = random(0, 6001);   // z in range [0, 6000]
+
+        // Add the generated waypoint to the robot's path
+        robot.addWaypoint(x, y, z);
+        
+        // Optionally print the waypoints to the serial monitor
+        Serial.print("Waypoint ");
+        Serial.print(i + 1);
+        Serial.print(": x=");
+        Serial.print(x);
+        Serial.print(", y=");
+        Serial.print(y);
+        Serial.print(", z=");
+        Serial.println(z);
+    }
+}
+
 void setup() {
     Serial.begin(9600);
     robot.setup();
 
-    // Example square
-    robot.addWaypoint(-200, -200, 0);
-    robot.addWaypoint(-800, -200, 0);
-    robot.addWaypoint(-800, -800, 0);  
-    robot.addWaypoint(-200, -800, 0);
-    robot.addWaypoint(-200, -200, 0);   
+    // Generate and add random waypoints to the robot's path
+    generateRandomWaypoints(10);  // Generate 10 random waypoints
+
+    // You can also add specific waypoints if desired:
+    // robot.addWaypoint(-200, -200, 0);   // Example waypoint 1
+    // robot.addWaypoint(-800, -200, 0);   // Example waypoint 2
 }
 
 void loop() {
