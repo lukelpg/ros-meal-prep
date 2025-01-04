@@ -1,8 +1,8 @@
 #include <Arduino.h> 
 #include "StepperMotorControl.h"
 
-StepperMotorControl::StepperMotorControl(int stepPin, int dirPin, int enablePin, int limitSwitchPin)
-    : _stepPin(stepPin), _dirPin(dirPin), _enablePin(enablePin), _limitSwitchPin(limitSwitchPin), _stepper(AccelStepper::DRIVER, _stepPin, _dirPin) {}
+StepperMotorControl::StepperMotorControl(int stepPin, int dirPin, int enablePin, int limitSwitchPin, int homePosition)
+    : _stepPin(stepPin), _dirPin(dirPin), _enablePin(enablePin), _limitSwitchPin(limitSwitchPin), _homePosition(homePosition), _stepper(AccelStepper::DRIVER, _stepPin, _dirPin) {}
 
 void StepperMotorControl::setup() {
     pinMode(_enablePin, OUTPUT);
@@ -22,11 +22,11 @@ void StepperMotorControl::run() {
 }
 
 void StepperMotorControl::home() {
-    Serial.println("In homing function");
+//    Serial.println("In homing function");
     // Homing function: move towards the limit switch
-    while (digitalRead(_limitSwitchPin) == HIGH) {  // Check if limit switch is triggered (assuming HIGH means not pressed)
-        Serial.println("In while of homing function");
-        _stepper.moveTo(-10000);  // Move towards the switch
+    while (digitalRead(_limitSwitchPin) == 0) {
+        Serial.println(digitalRead(_limitSwitchPin));
+        _stepper.moveTo(_homePosition);  // Move towards the switch
         _stepper.run();
     }
     _stepper.setCurrentPosition(0);  // Set position to 0 when the limit switch is hit

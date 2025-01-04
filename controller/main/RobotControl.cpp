@@ -29,7 +29,7 @@ void RobotControl::moveTo(int x, int y, int z) {
 void RobotControl::loop() {
     
     if (!_home) {
-        Serial.println("Home motors called");
+//        Serial.println("Home motors called");
         homeMotors();  // Home the motors at the start
     }
 

@@ -6,7 +6,7 @@
 
 class StepperMotorControl : public MotorControl {
 public:
-    StepperMotorControl(int stepPin, int dirPin, int enablePin, int limitSwitchPin);
+    StepperMotorControl(int stepPin, int dirPin, int enablePin, int limitSwitchPin, int homePosition);
     
     void setup() override;
     void moveTo(int position) override;
@@ -15,7 +15,7 @@ public:
     void stop() override;
 
 private:
-    int _stepPin, _dirPin, _enablePin, _limitSwitchPin;
+    int _stepPin, _dirPin, _enablePin, _limitSwitchPin, _homePosition;
     AccelStepper _stepper;
 };
 
