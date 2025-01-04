@@ -1,4 +1,4 @@
-#include <Arduino.h> 
+#include <Arduino.h>
 #include "StepperMotorControl.h"
 
 StepperMotorControl::StepperMotorControl(int stepPin, int dirPin, int enablePin, int limitSwitchPin, int homePosition)
@@ -21,8 +21,11 @@ void StepperMotorControl::run() {
     _stepper.run();
 }
 
+bool StepperMotorControl::isAtTarget() {
+    return _stepper.distanceToGo() == 0;
+}
+
 void StepperMotorControl::home() {
-//    Serial.println("In homing function");
     // Homing function: move towards the limit switch
     while (digitalRead(_limitSwitchPin) == 0) {
         Serial.println(digitalRead(_limitSwitchPin));

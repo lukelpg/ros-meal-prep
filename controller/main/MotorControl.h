@@ -8,6 +8,7 @@ public:
     virtual void run() = 0;  // Update motor state
     virtual void home() = 0;  // Homing functionality
     virtual void stop() = 0;  // Stop the motor
+    virtual bool isAtTarget() = 0;
     virtual ~MotorControl() {}
 };
 

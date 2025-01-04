@@ -34,3 +34,10 @@ git pull origin main
 ``` 
 git reset --hard origin/main
 ``` 
+
+
+## Robot Workspace
+
+X 0 -> -1000 (have a bit more space)
+Y 0 -> -1000 (have a bit more space)
+Z 0 -> 6000

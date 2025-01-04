@@ -12,6 +12,13 @@ RobotControl robot(&motorX, &motorY, &motorZ);
 void setup() {
     Serial.begin(9600);
     robot.setup();
+
+    // Example square
+    robot.addWaypoint(-200, -200, 0);
+    robot.addWaypoint(-800, -200, 0);
+    robot.addWaypoint(-800, -800, 0);  
+    robot.addWaypoint(-200, -800, 0);
+    robot.addWaypoint(-200, -200, 0);   
 }
 
 void loop() {
