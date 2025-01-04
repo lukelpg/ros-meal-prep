@@ -37,7 +37,14 @@ void setup() {
     robot.setup();
 
     // Generate and add random waypoints to the robot's path
-    generateRandomWaypoints(10);  // Generate 10 random waypoints
+//    generateRandomWaypoints(10);  // Generate 10 random waypoints
+
+        // Example square
+    robot.addWaypoint(-200, -200, 0);
+    robot.addWaypoint(-800, -200, 0);
+    robot.addWaypoint(-800, -800, 0);  
+    robot.addWaypoint(-200, -800, 0);
+    robot.addWaypoint(-200, -200, 0);  
 
     // You can also add specific waypoints if desired:
     // robot.addWaypoint(-200, -200, 0);   // Example waypoint 1
