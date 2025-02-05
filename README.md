@@ -41,3 +41,10 @@ git reset --hard origin/main
 X 0 -> -1000 (have a bit more space)
 Y 0 -> -1000 (have a bit more space)
 Z 0 -> 6000
+
+
+## Dev
+
+``` 
+ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
+``` 
