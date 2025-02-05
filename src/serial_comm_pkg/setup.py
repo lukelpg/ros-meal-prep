@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'serial_comm = serial_comm_pkg.serial_comm:main',
+            'waypoint_publisher = serial_comm_pkg.waypoint_publisher:main',
         ],
     },
 )

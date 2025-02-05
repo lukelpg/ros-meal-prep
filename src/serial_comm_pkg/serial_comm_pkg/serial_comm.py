@@ -18,14 +18,13 @@ class SerialCommNode(Node):
         # Publisher to send data to ROS
         self.publisher = self.create_publisher(String, 'serial_in', 10)
 
-        # Subscriber to handle incoming commands to the microcontroller
-        self.subscription = self.create_subscription(
+        # Subscriber to handle incoming waypoints from the waypoint publisher
+        self.waypoint_subscription = self.create_subscription(
             String,
-            'serial_out',
-            self.handle_outgoing_message,
+            'waypoints_topic',
+            self.handle_incoming_waypoints,
             10
         )
-        self.subscription
 
         # Timer to receive data periodically
         self.timer = self.create_timer(0.1, self.receive_serial_data)
@@ -33,22 +32,20 @@ class SerialCommNode(Node):
         self.waypoints = []  # List to store received waypoints
         self.current_waypoint = 0  # Pointer to the current waypoint
 
-    def handle_outgoing_message(self, msg):
-        """Handles outgoing messages from ROS topic to serial."""
-        self.get_logger().info(f"Received command: {msg.data}")
-
+    def handle_incoming_waypoints(self, msg):
+        """Handles incoming waypoint messages and stores them for sending."""
+        self.get_logger().info(f"Received waypoints: {msg.data}")
         if msg.data.startswith("WAYPOINTS"):
-            # Extract waypoints from the received message
             waypoints_data = msg.data[len("WAYPOINTS"):].strip()
+            self.get_logger().info(f"Waypoints data extracted: {waypoints_data}")
             waypoints = waypoints_data.split(";")  # Expecting each waypoint to be separated by a semicolon
-
+            self.waypoints.clear()  # Clear previous waypoints
             for waypoint in waypoints:
-                # Format as "MOVE,<x>,<y>,<z>"
+                # Format each waypoint as "MOVE,<x>,<y>,<z>"
                 x, y, z = waypoint.split(",")
                 self.waypoints.append(f"MOVE,{x},{y},{z}")
-            self.get_logger().info(f"Waypoints received: {self.waypoints}")
-
-            # After all waypoints are received, start sending them one by one
+            self.get_logger().info(f"Waypoints received and stored: {self.waypoints}")
+            # Start sending the waypoints after receiving them
             self.send_next_waypoint()
 
     def send_next_waypoint(self):
@@ -72,7 +69,7 @@ class SerialCommNode(Node):
         """Checks for incoming serial data and publishes it to a ROS topic."""
         data = self.serial_interface.receive_data()
         if data:
-            self.get_logger().info(f"Received: {data}")
+            self.get_logger().info(f"Received from Arduino: {data}")
             self.publish_received_data(data)
 
     def publish_received_data(self, data):

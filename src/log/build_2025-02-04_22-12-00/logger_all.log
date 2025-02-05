@@ -1,0 +1,212 @@
+[0.075s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.075s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7f5d537a5210>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f5d53892170>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f5d53892170>>, mixin_verb=('build',))
+[0.179s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.179s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.179s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.179s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.179s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.179s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.179s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/luke/Projects/robots/ros-meal-prep/src'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extension 'ignore'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extension 'ignore_ament_install'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extensions ['colcon_pkg']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extension 'colcon_pkg'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extensions ['colcon_meta']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extension 'colcon_meta'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extensions ['ros']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(joy_stick_pkg) by extension 'ros'
+[0.189s] DEBUG:colcon.colcon_core.package_identification:Package 'joy_stick_pkg' with type 'ros.ament_python' and name 'joy_stick_pkg'
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extension 'ignore'
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extension 'ignore_ament_install'
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extensions ['colcon_pkg']
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extension 'colcon_pkg'
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extensions ['colcon_meta']
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extension 'colcon_meta'
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extensions ['ros']
+[0.189s] Level 1:colcon.colcon_core.package_identification:_identify(serial_comm_pkg) by extension 'ros'
+[0.189s] DEBUG:colcon.colcon_core.package_identification:Package 'serial_comm_pkg' with type 'ros.ament_python' and name 'serial_comm_pkg'
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extension 'ignore'
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extension 'ignore_ament_install'
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extensions ['colcon_pkg']
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extension 'colcon_pkg'
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extensions ['colcon_meta']
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extension 'colcon_meta'
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extensions ['ros']
+[0.190s] Level 1:colcon.colcon_core.package_identification:_identify(stepper_pkg) by extension 'ros'
+[0.190s] DEBUG:colcon.colcon_core.package_identification:Package 'stepper_pkg' with type 'ros.ament_python' and name 'stepper_pkg'
+[0.190s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.190s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.190s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.190s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.190s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.204s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.204s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.204s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'cmake_args' from command line to 'None'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'cmake_target' from command line to 'None'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'cmake_clean_cache' from command line to 'False'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'cmake_clean_first' from command line to 'False'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'cmake_force_configure' from command line to 'False'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'ament_cmake_args' from command line to 'None'
+[0.205s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'catkin_cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'joy_stick_pkg' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.206s] DEBUG:colcon.colcon_core.verb:Building package 'joy_stick_pkg' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg', 'merge_install': False, 'path': '/home/luke/Projects/robots/ros-meal-prep/src/joy_stick_pkg', 'symlink_install': False, 'test_result_base': None}
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'cmake_target' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'cmake_clean_cache' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'cmake_clean_first' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'cmake_force_configure' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'ament_cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'catkin_cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'serial_comm_pkg' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.206s] DEBUG:colcon.colcon_core.verb:Building package 'serial_comm_pkg' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg', 'merge_install': False, 'path': '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg', 'symlink_install': False, 'test_result_base': None}
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'cmake_target' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'cmake_clean_cache' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'cmake_clean_first' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'cmake_force_configure' from command line to 'False'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'ament_cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'catkin_cmake_args' from command line to 'None'
+[0.206s] Level 5:colcon.colcon_core.verb:set package 'stepper_pkg' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.206s] DEBUG:colcon.colcon_core.verb:Building package 'stepper_pkg' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg', 'merge_install': False, 'path': '/home/luke/Projects/robots/ros-meal-prep/src/stepper_pkg', 'symlink_install': False, 'test_result_base': None}
+[0.206s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.207s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.207s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/luke/Projects/robots/ros-meal-prep/src/joy_stick_pkg' with build type 'ament_python'
+[0.207s] Level 1:colcon.colcon_core.shell:create_environment_hook('joy_stick_pkg', 'ament_prefix_path')
+[0.209s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.209s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/hook/ament_prefix_path.ps1'
+[0.210s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/hook/ament_prefix_path.dsv'
+[0.211s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/hook/ament_prefix_path.sh'
+[0.211s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.211s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.212s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg' with build type 'ament_python'
+[0.212s] Level 1:colcon.colcon_core.shell:create_environment_hook('serial_comm_pkg', 'ament_prefix_path')
+[0.212s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/hook/ament_prefix_path.ps1'
+[0.213s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/hook/ament_prefix_path.dsv'
+[0.213s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/hook/ament_prefix_path.sh'
+[0.213s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.213s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.214s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/luke/Projects/robots/ros-meal-prep/src/stepper_pkg' with build type 'ament_python'
+[0.214s] Level 1:colcon.colcon_core.shell:create_environment_hook('stepper_pkg', 'ament_prefix_path')
+[0.215s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/hook/ament_prefix_path.ps1'
+[0.215s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/hook/ament_prefix_path.dsv'
+[0.216s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/hook/ament_prefix_path.sh'
+[0.216s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.216s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.354s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/luke/Projects/robots/ros-meal-prep/src/joy_stick_pkg'
+[0.354s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.354s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.481s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg'
+[0.482s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.482s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.611s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/luke/Projects/robots/ros-meal-prep/src/stepper_pkg'
+[0.612s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.612s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.859s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/serial_comm_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg/install.log --single-version-externally-managed install_data
+[0.864s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/luke/Projects/robots/ros-meal-prep/src/stepper_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/stepper_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg/install.log --single-version-externally-managed install_data
+[0.883s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/luke/Projects/robots/ros-meal-prep/src/joy_stick_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/joy_stick_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg/install.log --single-version-externally-managed install_data
+[1.046s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/serial_comm_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/src/build/serial_comm_pkg/install.log --single-version-externally-managed install_data
+[1.050s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg' for CMake module files
+[1.050s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg' for CMake config files
+[1.051s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/lib'
+[1.051s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/bin'
+[1.051s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/lib/pkgconfig/serial_comm_pkg.pc'
+[1.051s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/lib/python3.10/site-packages'
+[1.051s] Level 1:colcon.colcon_core.shell:create_environment_hook('serial_comm_pkg', 'pythonpath')
+[1.051s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/hook/pythonpath.ps1'
+[1.052s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/hook/pythonpath.dsv'
+[1.052s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/hook/pythonpath.sh'
+[1.052s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/bin'
+[1.052s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(serial_comm_pkg)
+[1.053s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/package.ps1'
+[1.053s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/package.dsv'
+[1.054s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/package.sh'
+[1.054s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/package.bash'
+[1.055s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/serial_comm_pkg/package.zsh'
+[1.055s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/luke/Projects/robots/ros-meal-prep/src/install/serial_comm_pkg/share/colcon-core/packages/serial_comm_pkg)
+[1.061s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg' for CMake module files
+[1.062s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/luke/Projects/robots/ros-meal-prep/src/stepper_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/stepper_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/src/build/stepper_pkg/install.log --single-version-externally-managed install_data
+[1.062s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg' for CMake config files
+[1.063s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/lib'
+[1.063s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/bin'
+[1.063s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/lib/pkgconfig/stepper_pkg.pc'
+[1.063s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/lib/python3.10/site-packages'
+[1.063s] Level 1:colcon.colcon_core.shell:create_environment_hook('stepper_pkg', 'pythonpath')
+[1.063s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/hook/pythonpath.ps1'
+[1.063s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/hook/pythonpath.dsv'
+[1.064s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/hook/pythonpath.sh'
+[1.064s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/bin'
+[1.064s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(stepper_pkg)
+[1.064s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/package.ps1'
+[1.064s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/package.dsv'
+[1.065s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/package.sh'
+[1.065s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/package.bash'
+[1.065s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/stepper_pkg/package.zsh'
+[1.065s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/luke/Projects/robots/ros-meal-prep/src/install/stepper_pkg/share/colcon-core/packages/stepper_pkg)
+[1.086s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg' for CMake module files
+[1.087s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/luke/Projects/robots/ros-meal-prep/src/joy_stick_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/joy_stick_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/src/build/joy_stick_pkg/install.log --single-version-externally-managed install_data
+[1.087s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg' for CMake config files
+[1.088s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/lib'
+[1.088s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/bin'
+[1.088s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/lib/pkgconfig/joy_stick_pkg.pc'
+[1.088s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/lib/python3.10/site-packages'
+[1.088s] Level 1:colcon.colcon_core.shell:create_environment_hook('joy_stick_pkg', 'pythonpath')
+[1.088s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/hook/pythonpath.ps1'
+[1.089s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/hook/pythonpath.dsv'
+[1.089s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/hook/pythonpath.sh'
+[1.089s] Level 1:colcon.colcon_core.environment:checking '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/bin'
+[1.089s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(joy_stick_pkg)
+[1.089s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/package.ps1'
+[1.090s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/package.dsv'
+[1.090s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/package.sh'
+[1.090s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/package.bash'
+[1.090s] INFO:colcon.colcon_core.shell:Creating package script '/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/joy_stick_pkg/package.zsh'
+[1.091s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/luke/Projects/robots/ros-meal-prep/src/install/joy_stick_pkg/share/colcon-core/packages/joy_stick_pkg)
+[1.091s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.091s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.091s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[1.091s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.097s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.097s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.097s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.101s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.Spawn.ExecFailed: /usr/bin/dbus-launch terminated abnormally without any error message
+[1.101s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.101s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/luke/Projects/robots/ros-meal-prep/src/install/local_setup.ps1'
+[1.103s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/luke/Projects/robots/ros-meal-prep/src/install/_local_setup_util_ps1.py'
+[1.104s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/luke/Projects/robots/ros-meal-prep/src/install/setup.ps1'
+[1.104s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/luke/Projects/robots/ros-meal-prep/src/install/local_setup.sh'
+[1.105s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/luke/Projects/robots/ros-meal-prep/src/install/_local_setup_util_sh.py'
+[1.105s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/luke/Projects/robots/ros-meal-prep/src/install/setup.sh'
+[1.106s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/luke/Projects/robots/ros-meal-prep/src/install/local_setup.bash'
+[1.107s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/luke/Projects/robots/ros-meal-prep/src/install/setup.bash'
+[1.108s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/luke/Projects/robots/ros-meal-prep/src/install/local_setup.zsh'
+[1.108s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/luke/Projects/robots/ros-meal-prep/src/install/setup.zsh'
