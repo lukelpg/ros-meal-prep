@@ -1,0 +1,13 @@
+[0.000000] (-) TimerEvent: {}
+[0.000469] (joy_stick_pkg) JobQueued: {'identifier': 'joy_stick_pkg', 'dependencies': OrderedDict()}
+[0.000736] (serial_comm_pkg) JobQueued: {'identifier': 'serial_comm_pkg', 'dependencies': OrderedDict()}
+[0.000911] (stepper_pkg) JobQueued: {'identifier': 'stepper_pkg', 'dependencies': OrderedDict()}
+[0.000934] (joy_stick_pkg) JobStarted: {'identifier': 'joy_stick_pkg'}
+[0.006334] (joy_stick_pkg) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_python/build.py", line 40, in build\n    additional_hooks = create_environment_hook(\n  File "/usr/lib/python3/dist-packages/colcon_core/shell/__init__.py", line 446, in create_environment_hook\n    raise RuntimeError(\nRuntimeError: Could not find a primary shell extension for creating an environment hook\n'}
+[0.007613] (joy_stick_pkg) JobEnded: {'identifier': 'joy_stick_pkg', 'rc': 1}
+[0.008973] (serial_comm_pkg) JobStarted: {'identifier': 'serial_comm_pkg'}
+[0.009010] (serial_comm_pkg) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_python/build.py", line 40, in build\n    additional_hooks = create_environment_hook(\n  File "/usr/lib/python3/dist-packages/colcon_core/shell/__init__.py", line 446, in create_environment_hook\n    raise RuntimeError(\nRuntimeError: Could not find a primary shell extension for creating an environment hook\n'}
+[0.009482] (serial_comm_pkg) JobEnded: {'identifier': 'serial_comm_pkg', 'rc': 1}
+[0.009932] (stepper_pkg) JobStarted: {'identifier': 'stepper_pkg'}
+[0.012900] (stepper_pkg) JobEnded: {'identifier': 'stepper_pkg', 'rc': 'SIGINT'}
+[0.023581] (-) EventReactorShutdown: {}
