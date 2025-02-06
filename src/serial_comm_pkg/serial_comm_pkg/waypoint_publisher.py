@@ -12,23 +12,24 @@ class WaypointPublisher(Node):
 
         # Define square waypoints
         self.square_waypoints = [
-            (-200, -200, 0),
-            (-800, -200, 0),
-            (-800, -800, 0),
-            (-200, -800, 0),
-            (-200, -200, 0),
+            "-200, -200, 0",
+            "-800, -200, 0",
+            "-800, -800, 0",
+            "-200, -800, 0",
+            "-200, -200, 0",
             "GO"
         ]
 
         # Calculate the diameter of the circle (the diagonal of the square)
-        side_length = abs(self.square_waypoints[1][0] - self.square_waypoints[0][0])  # horizontal side length
-        circle_diameter = math.sqrt(2) * side_length  # Diagonal = side_length * sqrt(2)
+        # side_length = abs(self.square_waypoints[1][0] - self.square_waypoints[0][0])  # horizontal side length
+        # circle_diameter = math.sqrt(2) * side_length  # Diagonal = side_length * sqrt(2)
 
         # Generate waypoints for the spiral
-        self.spiral_waypoints = self.generate_spiral_points(circle_diameter, 150, 6000)  # 360 points, 6000 units for z
+        # self.spiral_waypoints = self.generate_spiral_points(circle_diameter, 150, 6000)  # 360 points, 6000 units for z
 
         # Combine square and spiral waypoints
-        self.waypoints = self.spiral_waypoints + ["GO"]
+        # self.waypoints = self.spiral_waypoints + ["GO"]
+        self.waypoints = self.square_waypoints
 
         # Publish waypoints once
         self.publish_waypoints()
