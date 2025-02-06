@@ -87,3 +87,6 @@ sudo apt-get install i2c-tools python3-smbus # might not need this
 sudo apt-get install python3-spidev
 sudo python3 -m pip install pyserial
 
+# sudo snap install arduino-cli
+# arduino-cli core install arduino:avr
+# arduino-cli lib install "AccelStepper"
