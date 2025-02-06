@@ -15,7 +15,8 @@ class WaypointPublisher(Node):
             "-800, -200, 0",
             "-800, -800, 0",
             "-200, -800, 0",
-            "-200, -200, 0"
+            "-200, -200, 0",
+            "GO"
         ]
 
         # Publish waypoints once

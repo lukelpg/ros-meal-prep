@@ -3,7 +3,7 @@ import time
 
 # Set up the serial port (adjust 'COMx' or '/dev/ttyUSBx' depending on your system)
 # For example, on Windows, you might use 'COM3', on Linux or macOS '/dev/ttyUSB0'.
-ser = serial.Serial('/dev/ttyUSB0', 115200)  # Replace with the correct port
+ser = serial.Serial('/dev/ttyACM0', 115200)  # Replace with the correct port
 time.sleep(2)  # Give some time for the connection to establish
 
 while True:

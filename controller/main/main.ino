@@ -35,7 +35,7 @@ void generateRandomWaypoints(int numWaypoints) {
 }
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     robot.setup();
 
     // Generate and add random waypoints to the robot's path
@@ -56,10 +56,14 @@ void loop() {
 
         if (command.startsWith("MOVE")) {
             // Parse the MOVE command and extract coordinates
-            int x = command.substring(5, command.indexOf(',')).toInt();
-            int y = command.substring(command.indexOf(',') + 1, command.lastIndexOf(',')).toInt();
-            int z = command.substring(command.lastIndexOf(',') + 1).toInt();
-
+            int firstComma = command.indexOf(',');
+            int secondComma = command.indexOf(',', firstComma + 1);
+            int thirdComma = command.indexOf(',', secondComma + 1);
+            
+            int x = command.substring(firstComma + 1, secondComma).toInt();
+            int y = command.substring(secondComma + 1, thirdComma).toInt();
+            int z = command.substring(thirdComma + 1).toInt();
+            
             // Add the waypoint to the robot's path
             robot.addWaypoint(x, y, z);
             Serial.print("Waypoint added: ");
@@ -68,6 +72,8 @@ void loop() {
             Serial.print(y);
             Serial.print(", ");
             Serial.println(z);
+
+            Serial.println("ACK");
         }
         else if (command == "GO") {
             // When the GO signal is received, start the robot's movement

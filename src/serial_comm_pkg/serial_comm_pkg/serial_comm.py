@@ -6,7 +6,7 @@ from serial_comm_pkg.serial_interface import SerialInterface
 class SerialCommNode(Node):
     def __init__(self):
         super().__init__('serial_comm')
-        self.declare_parameter('serial_port', '/dev/ttyUSB0')
+        self.declare_parameter('serial_port', '/dev/ttyACM0')
         self.declare_parameter('baudrate', 115200)
 
         serial_port = self.get_parameter('serial_port').get_parameter_value().string_value
@@ -31,31 +31,42 @@ class SerialCommNode(Node):
 
         self.waypoints = []  # List to store received waypoints
         self.current_waypoint = 0  # Pointer to the current waypoint
+        self.waiting_for_ack = False  # Flag to check if we're waiting for an acknowledgment
 
     def handle_incoming_waypoints(self, msg):
         """Handles incoming waypoint messages and stores them for sending."""
         self.get_logger().info(f"Received waypoints: {msg.data}")
+
         if msg.data.startswith("WAYPOINTS"):
             waypoints_data = msg.data[len("WAYPOINTS"):].strip()
-            self.get_logger().info(f"Waypoints data extracted: {waypoints_data}")
             waypoints = waypoints_data.split(";")  # Expecting each waypoint to be separated by a semicolon
             self.waypoints.clear()  # Clear previous waypoints
+
             for waypoint in waypoints:
+                if waypoint == 'GO':
+                    self.waypoints.append(f"GO")
+                    break
+
                 # Format each waypoint as "MOVE,<x>,<y>,<z>"
                 x, y, z = waypoint.split(",")
                 self.waypoints.append(f"MOVE,{x},{y},{z}")
-            self.get_logger().info(f"Waypoints received and stored: {self.waypoints}")
-            # Start sending the waypoints after receiving them
+            self.get_logger().info(f"Waypoints parsed and stored: {self.waypoints}")
+
+            # Send the first waypoint to trigger sending
             self.send_next_waypoint()
 
     def send_next_waypoint(self):
         """Sends the next waypoint to the microcontroller."""
         if self.current_waypoint < len(self.waypoints):
-            # Send the next waypoint
-            msg = self.waypoints[self.current_waypoint]
-            self.get_logger().info(f"Sending waypoint: {msg}")
-            self.serial_interface.send_data(msg)
-            self.current_waypoint += 1
+            # Send the next waypoint if not already waiting for acknowledgment
+            if not self.waiting_for_ack:
+                msg = self.waypoints[self.current_waypoint]
+                self.get_logger().info(f"Sending waypoint: {msg}")
+                self.serial_interface.send_data(msg)
+                self.waiting_for_ack = True  # Set flag to indicate we're waiting for acknowledgment
+                self.current_waypoint += 1
+            else:
+                self.get_logger().info("Waiting for acknowledgment before sending the next waypoint.")
         else:
             self.get_logger().info("All waypoints sent. Sending GO signal to start robot.")
             self.send_go_signal()
@@ -71,6 +82,12 @@ class SerialCommNode(Node):
         if data:
             self.get_logger().info(f"Received from Arduino: {data}")
             self.publish_received_data(data)
+
+            # Handle the acknowledgment to proceed with the next waypoint
+            if "ACK" in data:  # Example acknowledgment message from robot (e.g., "ACK")
+                self.get_logger().info("Acknowledgment received.")
+                self.waiting_for_ack = False  # Reset the flag to allow sending the next waypoint
+                self.send_next_waypoint()
 
     def publish_received_data(self, data):
         """Publishes received data to a ROS topic."""
