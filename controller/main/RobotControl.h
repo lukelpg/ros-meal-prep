@@ -23,7 +23,7 @@ private:
     bool _home;  // Flag to check if the robot is homed
 
     // Path following variables
-    static const int MAX_WAYPOINTS = 100;  // Maximum number of waypoints
+    static const int MAX_WAYPOINTS = 150;  // Maximum number of waypoints
     int _waypoints[MAX_WAYPOINTS][3];  // Array of waypoints (x, y, z)
     size_t _currentWaypointIndex;  // Index of the current waypoint
     size_t _waypointCount;  // Number of waypoints in the path

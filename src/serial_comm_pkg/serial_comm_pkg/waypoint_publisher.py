@@ -24,19 +24,20 @@ class WaypointPublisher(Node):
         side_length = abs(self.square_waypoints[1][0] - self.square_waypoints[0][0])  # horizontal side length
         circle_diameter = math.sqrt(2) * side_length  # Diagonal = side_length * sqrt(2)
 
-        # Generate waypoints for the circle
-        self.circle_waypoints = self.generate_circle_points(circle_diameter, 90)  # 8 points around the circle
+        # Generate waypoints for the spiral
+        self.spiral_waypoints = self.generate_spiral_points(circle_diameter, 150, 6000)  # 360 points, 6000 units for z
 
-        # Combine square and circle waypoints
-        self.waypoints = self.circle_waypoints + ["GO"]
+        # Combine square and spiral waypoints
+        self.waypoints = self.spiral_waypoints + ["GO"]
 
         # Publish waypoints once
         self.publish_waypoints()
 
-    def generate_circle_points(self, diameter, num_points):
-        """Generate points on the circumference of a circle."""
+    def generate_spiral_points(self, diameter, num_points, max_z):
+        """Generate points for a spiral with a given diameter and max z value."""
         radius = diameter / 2
         center_x, center_y = -500, -500  # Center of the circle
+        z_increment = max_z / num_points  # Divide the total z range by the number of points
 
         points = []
         for i in range(num_points):
@@ -44,7 +45,8 @@ class WaypointPublisher(Node):
             angle = 2 * math.pi * i / num_points
             x = center_x + radius * math.cos(angle)
             y = center_y + radius * math.sin(angle)
-            points.append(f"{x}, {y}, 0")
+            z = z_increment * i  # Increase z with each point
+            points.append(f"{x}, {y}, {z}")
 
         return points
 
