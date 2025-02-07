@@ -87,6 +87,8 @@ sudo apt-get install i2c-tools python3-smbus # might not need this
 sudo apt-get install python3-spidev
 sudo python3 -m pip install pyserial
 
-# sudo snap install arduino-cli
-# arduino-cli core install arduino:avr
-# arduino-cli lib install "AccelStepper"
+sudo snap install arduino-cli
+arduino-cli core install arduino:avr
+arduino-cli lib install "AccelStepper"
+sudo snap connect arduino-cli:raw-usb # TODO: Test this works without user running
+#sudo usermod -aG dialout $USER # User needed to run this in terminal?

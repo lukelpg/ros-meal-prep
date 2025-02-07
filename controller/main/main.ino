@@ -37,6 +37,7 @@ void generateRandomWaypoints(int numWaypoints) {
 void setup() {
     Serial.begin(115200);
     robot.setup();
+    Serial.println("Robot setup complete");
 
     // Generate and add random waypoints to the robot's path
     // generateRandomWaypoints(10);  // Generate 10 random waypoints
