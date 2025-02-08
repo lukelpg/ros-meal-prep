@@ -13,19 +13,19 @@ class StrokeGenerator:
                 self.z_min <= z <= self.z_max)
 
     def generate_stroke(self, stroke_type, params, curve_depth=0):
-        """Generates stroke points before curve processing."""
+        """Generates stroke points before curve processing, ensuring depth is used."""
         print(f"Generating {stroke_type} stroke with params: {params}, Depth: {curve_depth}")
 
         if stroke_type == "line":
-            points = self._generate_line(*params, curve_depth)
+            points = self._generate_line(*params, curve_depth)  # ✅ Pass depth correctly
         elif stroke_type == "arc":
-            points = self._generate_arc(*params)
+            points = self._generate_arc(*params, curve_depth)  # ✅ Pass depth correctly
         else:
             print(f"Unknown stroke type: {stroke_type}")
             return []
 
         print(f"Generated {len(points)} stroke points before filtering.")
-
+        
         valid_points = [p for p in points if self.is_within_workspace(p[0], p[1])]
         print(f"Remaining {len(valid_points)} valid points after workspace filtering.")
 
@@ -52,13 +52,13 @@ class StrokeGenerator:
 
         return [(x, y, z) for x, y, z in zip(x_vals, y_vals, z_vals)]
 
-    def _generate_arc(self, center, radius, start_angle, end_angle, curve_depth=100, num_points=20):
+    def _generate_arc(self, center, radius, start_angle, end_angle, curve_depth, num_points=20):
         """
         Generates an arc with a downward curve:
         
-        - Starts at `Z = curve_depth` (default 100).
-        - Dips to `Z = 0` at the midpoint.
-        - Rises back to `Z = curve_depth` at the end.
+        - Starts at `Z = curve_depth`
+        - Dips to `Z = 0`
+        - Rises back to `Z = curve_depth`
         """
         print(f"Generating arc at {center} with radius {radius} from {start_angle}° to {end_angle}° with depth {curve_depth}")
 
@@ -68,10 +68,11 @@ class StrokeGenerator:
         x_vals = center[0] + radius * np.cos(angles)
         y_vals = center[1] + radius * np.sin(angles)
 
-        # Compute downward curve (same as line stroke)
+        # Compute downward curve (adjusted for correct scaling)
         z_vals = [curve_depth * (1 - (2 * (i / (num_points - 1)) - 1) ** 2) for i in range(num_points)]
 
-        # Invert so that it **starts at Z=100, dips to Z=0, rises back**
+        # Ensure the arc follows the correct curve depth pattern
         z_vals = [curve_depth - z for z in z_vals]
 
         return [(x, y, z) for x, y, z in zip(x_vals, y_vals, z_vals)]
+
