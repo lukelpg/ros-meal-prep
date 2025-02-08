@@ -22,8 +22,8 @@ def main():
     # Send test strokes
     test_strokes = [
         "line, 0, 0, -1000, -1000, 500",
-        #"line, -200, -200, -800, -800",
-        #"arc, -500, -500, 200, 0, 90"
+        # "line, -200, -200, -800, -800",
+        "arc, -500, -500, 200, 0, 180"
     ]
 
     for stroke in test_strokes:

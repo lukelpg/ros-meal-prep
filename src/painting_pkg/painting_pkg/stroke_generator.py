@@ -52,9 +52,26 @@ class StrokeGenerator:
 
         return [(x, y, z) for x, y, z in zip(x_vals, y_vals, z_vals)]
 
-    def _generate_arc(self, center, radius, start_angle, end_angle, num_points=20):
-        """Generates points along an arc."""
-        print(f"Generating arc at {center} with radius {radius} from {start_angle}° to {end_angle}°")
+    def _generate_arc(self, center, radius, start_angle, end_angle, curve_depth=100, num_points=20):
+        """
+        Generates an arc with a downward curve:
+        
+        - Starts at `Z = curve_depth` (default 100).
+        - Dips to `Z = 0` at the midpoint.
+        - Rises back to `Z = curve_depth` at the end.
+        """
+        print(f"Generating arc at {center} with radius {radius} from {start_angle}° to {end_angle}° with depth {curve_depth}")
 
         angles = np.linspace(np.radians(start_angle), np.radians(end_angle), num_points)
-        return [(center[0] + radius * np.cos(a), center[1] + radius * np.sin(a)) for a in angles]
+
+        # Compute XY positions
+        x_vals = center[0] + radius * np.cos(angles)
+        y_vals = center[1] + radius * np.sin(angles)
+
+        # Compute downward curve (same as line stroke)
+        z_vals = [curve_depth * (1 - (2 * (i / (num_points - 1)) - 1) ** 2) for i in range(num_points)]
+
+        # Invert so that it **starts at Z=100, dips to Z=0, rises back**
+        z_vals = [curve_depth - z for z in z_vals]
+
+        return [(x, y, z) for x, y, z in zip(x_vals, y_vals, z_vals)]

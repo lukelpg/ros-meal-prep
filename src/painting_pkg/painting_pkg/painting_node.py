@@ -54,18 +54,30 @@ class PaintingNode(Node):
         stroke_type = parts[0]
         param_values = list(map(float, parts[1:]))
 
-        # If there are an odd number of values, the last one is the depth
-        if len(param_values) % 2 == 1:
-            curve_depth = param_values.pop()  # Extract last value
-        else:
-            curve_depth = 0  # Default to no curve
+        # Arc strokes need 5 params: center_x, center_y, radius, start_angle, end_angle
+        if stroke_type == "arc":
+            if len(param_values) == 6:
+                curve_depth = param_values.pop()  # Extract last value as depth
+            else:
+                curve_depth = 0  # Default depth if not specified
 
-        # Convert remaining values into coordinate pairs
-        params = [tuple(param_values[i:i+2]) for i in range(0, len(param_values), 2)]
+            center = (param_values[0], param_values[1])
+            radius = param_values[2]
+            start_angle = param_values[3]
+            end_angle = param_values[4]
+            params = [center, radius, start_angle, end_angle]
+
+        # Line strokes need at least 2 points
+        else:
+            if len(param_values) % 2 == 1:
+                curve_depth = param_values.pop()
+            else:
+                curve_depth = 0  # Default depth
+
+            params = [tuple(param_values[i:i+2]) for i in range(0, len(param_values), 2)]
 
         self.get_logger().info(f"Extracted stroke type: {stroke_type}, Params: {params}, Depth: {curve_depth}")
         return stroke_type, params, curve_depth
-
 
 def main(args=None):
     rclpy.init(args=args)
