@@ -56,5 +56,5 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
 - Make path following more efficent (no decel from point to point)
 - Add state machine to microcontroller so it can receive more instructions without being re-flashed
 - Write algo for generating sequence of strokes from a picture (big one lol)
-    - Idea: Picture -> *Somthing?* -> Strokes -> Curves -> Coords. Seq. -> Inst. -> Axial Movement
+    - Idea: Picture -> *Somthing?* -> Layers? -> Shapes? -> Strokes -> Curves -> Coords. Seq. -> Inst. -> Axial Movement
     - Expand stroke types (Bezier, complex splines)
