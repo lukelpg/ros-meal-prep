@@ -31,6 +31,17 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     contours, _ = cv2.findContours(closed_edges.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     print(f"Found {len(contours)} contours.")
     
+    shape_counts = {
+        "Triangle": 0,
+        "Rectangle": 0,
+        "Square": 0,
+        "Pentagon": 0,
+        "Hexagon": 0,
+        "Heptagon": 0,
+        "Polygon": 0,
+        "Circle": 0
+    }
+
     img_colored = np.zeros_like(img)
     contour_img = np.zeros_like(img)
     img_contours = img.copy()
@@ -46,32 +57,41 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
         epsilon = epsilon_factor * cv2.arcLength(contour, True)
         approx = cv2.approxPolyDP(contour, epsilon, True)
         
-        print(f"Contour {i+1}: Number of vertices in approximation: {len(approx)}")
-        
         if len(approx) == 3:
             shape_name = "Triangle"
+            shape_counts["Triangle"] += 1
         elif len(approx) == 4:
             x, y, w, h = cv2.boundingRect(approx)
             aspect_ratio = float(w) / h
-            shape_name = "Square" if 0.95 <= aspect_ratio <= 1.05 else "Rectangle"
+            if 0.95 <= aspect_ratio <= 1.05:
+                shape_name = "Square"
+                shape_counts["Square"] += 1
+            else:
+                shape_name = "Rectangle"
+                shape_counts["Rectangle"] += 1
         elif len(approx) == 5:
             shape_name = "Pentagon"
+            shape_counts["Pentagon"] += 1
         elif len(approx) == 6:
             shape_name = "Hexagon"
+            shape_counts["Hexagon"] += 1
         elif len(approx) == 7:
             shape_name = "Heptagon"
+            shape_counts["Heptagon"] += 1
         elif len(approx) > 7:
             shape_name = "Polygon"
+            shape_counts["Polygon"] += 1
         else:
             center, radius = cv2.minEnclosingCircle(contour)
             circle_area = np.pi * (radius ** 2)
             if abs(contour_area - circle_area) / circle_area < 0.2:
                 shape_name = "Circle"
+                shape_counts["Circle"] += 1
             else:
                 shape_name = "Polygon"
-        
-        print(f"Contour {i+1}: Shape classified as {shape_name}")
+                shape_counts["Polygon"] += 1
 
+        # Draw contours and fill with mean color
         cv2.drawContours(img_contours, [approx], -1, (0, 255, 0), 2)
 
         # Calculate the average color inside the contour
@@ -82,10 +102,6 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
         # Fill the contour with the mean color
         cv2.drawContours(img_colored, [contour], -1, mean_color, thickness=cv2.FILLED)
 
-        # Put the shape name text in the image
-        x, y = approx.ravel()[0], approx.ravel()[1] - 10
-        cv2.putText(img_contours, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-        
         # Draw each individual contour on the blank image with a random color
         color = [random.randint(0, 255) for _ in range(3)]
         cv2.drawContours(contour_img, [contour], -1, color, 1)
@@ -94,6 +110,11 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     cv2.imwrite(isolatedContours, contour_img)
     cv2.imwrite(shapesOnImage, img_contours)
     cv2.imwrite(colouredShapes, img_colored)
+
+    # Print the counts of each shape
+    print("\nShape Counts:")
+    for shape, count in shape_counts.items():
+        print(f"{shape}: {count}")
 
 # Example call to the function with tunable parameters
 detect_shapes(inputImage, epsilon_factor=0.02, min_area=100)
