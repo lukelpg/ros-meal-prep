@@ -102,6 +102,11 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
         # Fill the contour with the mean color
         cv2.drawContours(img_colored, [contour], -1, mean_color, thickness=cv2.FILLED)
 
+        # Put the shape name text in the image
+        x, y = approx.ravel()[0], approx.ravel()[1] - 10
+        # cv2.putText(img_colored, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+        cv2.putText(img_contours, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+
         # Draw each individual contour on the blank image with a random color
         color = [random.randint(0, 255) for _ in range(3)]
         cv2.drawContours(contour_img, [contour], -1, color, 1)
