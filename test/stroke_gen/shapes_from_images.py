@@ -1,14 +1,17 @@
 import cv2
 import numpy as np
 import random
+import math
 
 inputImage = "linux.png"
-
 edgesImage = "roughEdges.png"
 closedEdgesImage = "closedEdges.png"
 isolatedContours = "isolatedContours.png"
 shapesOnImage = "shapesOnImage.png"
 colouredShapes = "colouredShapes.png"
+
+# Paintbrush width (constant)
+BRUSH_WIDTH = 10  # Modify as needed
 
 def load_image(image_path):
     """Loads an image from a given path."""
@@ -101,13 +104,46 @@ def identify_shape(approx, contour_area):
         else:
             return "Polygon"
 
+def generate_strokes(approx, brush_width):
+    """Generate strokes (lines or arcs) to fill the contours based on the shape approximation."""
+    strokes = []
+    num_points = len(approx)
+    
+    for i in range(num_points):
+        start = approx[i][0]
+        end = approx[(i + 1) % num_points][0]  # Connect back to the first point
+        
+        # If the points form a straight line, generate line strokes
+        if is_line(start, end):
+            stroke = f"line, {start[0]}, {start[1]}, {end[0]}, {end[1]}, {brush_width}"
+            strokes.append(stroke)
+        
+        # If the points form a curve (more than 2), generate arc strokes
+        else:
+            # Example: if we have a curve segment, generate arcs (for simplicity)
+            center = ((start[0] + end[0]) // 2, (start[1] + end[1]) // 2)
+            radius = int(math.hypot(end[0] - start[0], end[1] - start[1]) / 2)
+            stroke = f"arc, {center[0]}, {center[1]}, {radius}, 0, 180, {brush_width}"
+            strokes.append(stroke)
+    
+    return strokes
+
+def is_line(start, end):
+    """Determine if the segment is a straight line or not."""
+    return abs(start[1] - end[1]) < BRUSH_WIDTH and abs(start[0] - end[0]) < BRUSH_WIDTH
+
 def draw_contours_and_shapes(img, contours, shapes, shape_counts):
-    """Draws contours, shape names, and fills contours with colors."""
+    """Draw contours, shape names, and fill contours with colors."""
     img_colored = np.zeros_like(img)
     contour_img = np.zeros_like(img)
     img_contours = img.copy()
     
     for approx, shape_name in shapes:
+        # Generate strokes for the shape approximation
+        strokes = generate_strokes(approx, BRUSH_WIDTH)
+        for stroke in strokes:
+            print(f"Generated Stroke: {stroke}")
+        
         # Draw contours and fill with mean color
         cv2.drawContours(img_contours, [approx], -1, (0, 255, 0), 2)
 
