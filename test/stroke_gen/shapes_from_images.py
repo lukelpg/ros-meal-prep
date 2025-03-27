@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import random
 
-inputImage = "linux.png"
+inputImage = "car.png"
 
 edgesImage = "roughEdges.png"
 closedEdgesImage = "closedEdges.png"
@@ -81,7 +81,7 @@ def detect_shapes(image_path):
 
         # Put the shape name text in the image
         x, y = approx.ravel()[0], approx.ravel()[1] - 10
-        cv2.putText(img_colored, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+        # cv2.putText(img_colored, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         cv2.putText(img_contours, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         
         # Draw each individual contour on the blank image with a random color
