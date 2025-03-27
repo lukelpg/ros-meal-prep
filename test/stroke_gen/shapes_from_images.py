@@ -2,16 +2,14 @@ import cv2
 import numpy as np
 import random
 
-inputImage = "car.png"
-
+inputImage = "linux.png"
 edgesImage = "roughEdges.png"
 closedEdgesImage = "closedEdges.png"
 isolatedContours = "isolatedContours.png"
 shapesOnImage = "shapesOnImage.png"
 colouredShapes = "colouredShapes.png"
 
-
-def detect_shapes(image_path):
+def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     img = cv2.imread(image_path)
     if img is None:
         print("Error: Could not load image.")
@@ -38,8 +36,14 @@ def detect_shapes(image_path):
     img_contours = img.copy()
 
     for i, contour in enumerate(contours):
-        # Reduce epsilon for better approximation accuracy
-        epsilon = 0.01 * cv2.arcLength(contour, True)
+        contour_area = cv2.contourArea(contour)
+        
+        # Skip small contours based on min_area
+        if contour_area < min_area:
+            continue
+        
+        # Adjust epsilon for approximation accuracy based on epsilon_factor
+        epsilon = epsilon_factor * cv2.arcLength(contour, True)
         approx = cv2.approxPolyDP(contour, epsilon, True)
         
         print(f"Contour {i+1}: Number of vertices in approximation: {len(approx)}")
@@ -61,7 +65,6 @@ def detect_shapes(image_path):
         else:
             center, radius = cv2.minEnclosingCircle(contour)
             circle_area = np.pi * (radius ** 2)
-            contour_area = cv2.contourArea(contour)
             if abs(contour_area - circle_area) / circle_area < 0.2:
                 shape_name = "Circle"
             else:
@@ -81,7 +84,6 @@ def detect_shapes(image_path):
 
         # Put the shape name text in the image
         x, y = approx.ravel()[0], approx.ravel()[1] - 10
-        # cv2.putText(img_colored, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         cv2.putText(img_contours, shape_name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         
         # Draw each individual contour on the blank image with a random color
@@ -93,5 +95,5 @@ def detect_shapes(image_path):
     cv2.imwrite(shapesOnImage, img_contours)
     cv2.imwrite(colouredShapes, img_colored)
 
-
-detect_shapes(inputImage)
+# Example call to the function with tunable parameters
+detect_shapes(inputImage, epsilon_factor=0.02, min_area=100)
