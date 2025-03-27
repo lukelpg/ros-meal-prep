@@ -90,8 +90,8 @@ def detect_shapes(image_path):
 
     # Save images
     cv2.imwrite(isolatedContours, contour_img)
-    cv2.imwrite(shapesOnImage, img_colored)
-    cv2.imwrite(colouredShapes, img_contours)
+    cv2.imwrite(shapesOnImage, img_contours)
+    cv2.imwrite(colouredShapes, img_colored)
 
 
 detect_shapes(inputImage)
