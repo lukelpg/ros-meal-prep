@@ -1,0 +1,35 @@
+[0.945s] Invoking command in '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/serial_comm_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/install.log --single-version-externally-managed install_data
+[1.077s] running egg_info
+[1.077s] creating ../../build/serial_comm_pkg/serial_comm_pkg.egg-info
+[1.087s] writing ../../build/serial_comm_pkg/serial_comm_pkg.egg-info/PKG-INFO
+[1.087s] writing dependency_links to ../../build/serial_comm_pkg/serial_comm_pkg.egg-info/dependency_links.txt
+[1.087s] writing entry points to ../../build/serial_comm_pkg/serial_comm_pkg.egg-info/entry_points.txt
+[1.087s] writing requirements to ../../build/serial_comm_pkg/serial_comm_pkg.egg-info/requires.txt
+[1.087s] writing top-level names to ../../build/serial_comm_pkg/serial_comm_pkg.egg-info/top_level.txt
+[1.087s] writing manifest file '../../build/serial_comm_pkg/serial_comm_pkg.egg-info/SOURCES.txt'
+[1.107s] reading manifest file '../../build/serial_comm_pkg/serial_comm_pkg.egg-info/SOURCES.txt'
+[1.107s] adding license file 'LICENSE'
+[1.108s] writing manifest file '../../build/serial_comm_pkg/serial_comm_pkg.egg-info/SOURCES.txt'
+[1.108s] running build
+[1.108s] running build_py
+[1.108s] creating /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build
+[1.108s] creating /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib
+[1.108s] creating /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib/serial_comm_pkg
+[1.108s] copying serial_comm_pkg/waypoint_publisher.py -> /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib/serial_comm_pkg
+[1.108s] copying serial_comm_pkg/utils.py -> /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib/serial_comm_pkg
+[1.108s] copying serial_comm_pkg/__init__.py -> /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib/serial_comm_pkg
+[1.108s] copying serial_comm_pkg/serial_comm.py -> /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib/serial_comm_pkg
+[1.109s] copying serial_comm_pkg/serial_interface.py -> /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build/lib/serial_comm_pkg
+[1.109s] running install
+[1.112s] running install_lib
+[1.123s] running install_data
+[1.123s] copying resource/serial_comm_pkg -> /home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/share/ament_index/resource_index/packages
+[1.123s] copying package.xml -> /home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/share/serial_comm_pkg
+[1.124s] running install_egg_info
+[1.132s] removing '/home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/lib/python3.10/site-packages/serial_comm_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[1.132s] Copying ../../build/serial_comm_pkg/serial_comm_pkg.egg-info to /home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/lib/python3.10/site-packages/serial_comm_pkg-0.0.0-py3.10.egg-info
+[1.133s] running install_scripts
+[1.219s] Installing serial_comm script to /home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/lib/serial_comm_pkg
+[1.219s] Installing waypoint_publisher script to /home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/lib/serial_comm_pkg
+[1.219s] writing list of installed files to '/home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/install.log'
+[1.258s] Invoked command in '/home/luke/Projects/robots/ros-meal-prep/src/serial_comm_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/serial_comm_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/serial_comm_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/serial_comm_pkg/install.log --single-version-externally-managed install_data

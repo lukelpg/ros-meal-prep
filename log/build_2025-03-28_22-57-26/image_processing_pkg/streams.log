@@ -1,0 +1,53 @@
+[0.850s] Invoking command in '/home/luke/Projects/robots/ros-meal-prep/src/image_processing_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/image_processing_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/install.log --single-version-externally-managed install_data
+[0.960s] running egg_info
+[0.960s] creating ../../build/image_processing_pkg/image_processing_pkg.egg-info
+[0.960s] writing ../../build/image_processing_pkg/image_processing_pkg.egg-info/PKG-INFO
+[0.960s] writing dependency_links to ../../build/image_processing_pkg/image_processing_pkg.egg-info/dependency_links.txt
+[0.961s] writing entry points to ../../build/image_processing_pkg/image_processing_pkg.egg-info/entry_points.txt
+[0.961s] writing requirements to ../../build/image_processing_pkg/image_processing_pkg.egg-info/requires.txt
+[0.961s] writing top-level names to ../../build/image_processing_pkg/image_processing_pkg.egg-info/top_level.txt
+[0.961s] writing manifest file '../../build/image_processing_pkg/image_processing_pkg.egg-info/SOURCES.txt'
+[0.961s] reading manifest file '../../build/image_processing_pkg/image_processing_pkg.egg-info/SOURCES.txt'
+[0.962s] adding license file 'LICENSE'
+[0.962s] writing manifest file '../../build/image_processing_pkg/image_processing_pkg.egg-info/SOURCES.txt'
+[0.962s] running build
+[0.962s] running build_py
+[0.962s] creating /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build
+[0.962s] creating /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib
+[0.963s] creating /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/stroke_mapping.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/image_processing_node.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/scaling.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/drawing.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/image_processor.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/config.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] copying image_processing_pkg/__init__.py -> /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg
+[0.963s] running install
+[0.963s] running install_lib
+[0.964s] creating /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/stroke_mapping.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/image_processing_node.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/scaling.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/drawing.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/image_processor.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/config.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.964s] copying /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build/lib/image_processing_pkg/__init__.py -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg
+[0.965s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/stroke_mapping.py to stroke_mapping.cpython-310.pyc
+[0.966s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/image_processing_node.py to image_processing_node.cpython-310.pyc
+[0.966s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/scaling.py to scaling.cpython-310.pyc
+[0.966s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/drawing.py to drawing.cpython-310.pyc
+[0.967s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/image_processor.py to image_processor.cpython-310.pyc
+[0.967s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/config.py to config.cpython-310.pyc
+[0.967s] byte-compiling /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg/__init__.py to __init__.cpython-310.pyc
+[0.967s] running install_data
+[0.967s] creating /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/share/ament_index
+[0.968s] creating /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/share/ament_index/resource_index
+[0.968s] creating /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/share/ament_index/resource_index/packages
+[0.968s] copying resource/image_processing_pkg -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/share/ament_index/resource_index/packages
+[0.968s] copying package.xml -> /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/share/image_processing_pkg
+[0.968s] running install_egg_info
+[0.969s] Copying ../../build/image_processing_pkg/image_processing_pkg.egg-info to /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages/image_processing_pkg-0.0.0-py3.10.egg-info
+[0.969s] running install_scripts
+[0.981s] Installing image_processing_node script to /home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/image_processing_pkg
+[0.982s] writing list of installed files to '/home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/install.log'
+[1.028s] Invoked command in '/home/luke/Projects/robots/ros-meal-prep/src/image_processing_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/image_processing_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/image_processing_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/image_processing_pkg/install.log --single-version-externally-managed install_data

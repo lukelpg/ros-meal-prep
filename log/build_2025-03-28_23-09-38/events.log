@@ -1,0 +1,21 @@
+[0.000000] (-) TimerEvent: {}
+[0.000154] (image_processing_pkg) JobQueued: {'identifier': 'image_processing_pkg', 'dependencies': OrderedDict()}
+[0.000179] (joy_stick_pkg) JobQueued: {'identifier': 'joy_stick_pkg', 'dependencies': OrderedDict()}
+[0.000189] (painting_pkg) JobQueued: {'identifier': 'painting_pkg', 'dependencies': OrderedDict()}
+[0.000198] (serial_comm_pkg) JobQueued: {'identifier': 'serial_comm_pkg', 'dependencies': OrderedDict()}
+[0.000208] (stepper_pkg) JobQueued: {'identifier': 'stepper_pkg', 'dependencies': OrderedDict()}
+[0.000217] (image_processing_pkg) JobStarted: {'identifier': 'image_processing_pkg'}
+[0.002702] (image_processing_pkg) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_python/build.py", line 40, in build\n    additional_hooks = create_environment_hook(\n  File "/usr/lib/python3/dist-packages/colcon_core/shell/__init__.py", line 446, in create_environment_hook\n    raise RuntimeError(\nRuntimeError: Could not find a primary shell extension for creating an environment hook\n'}
+[0.003117] (image_processing_pkg) JobEnded: {'identifier': 'image_processing_pkg', 'rc': 1}
+[0.003629] (joy_stick_pkg) JobStarted: {'identifier': 'joy_stick_pkg'}
+[0.004340] (joy_stick_pkg) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_python/build.py", line 40, in build\n    additional_hooks = create_environment_hook(\n  File "/usr/lib/python3/dist-packages/colcon_core/shell/__init__.py", line 446, in create_environment_hook\n    raise RuntimeError(\nRuntimeError: Could not find a primary shell extension for creating an environment hook\n'}
+[0.005686] (joy_stick_pkg) JobEnded: {'identifier': 'joy_stick_pkg', 'rc': 1}
+[0.006125] (painting_pkg) JobStarted: {'identifier': 'painting_pkg'}
+[0.006159] (painting_pkg) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_python/build.py", line 40, in build\n    additional_hooks = create_environment_hook(\n  File "/usr/lib/python3/dist-packages/colcon_core/shell/__init__.py", line 446, in create_environment_hook\n    raise RuntimeError(\nRuntimeError: Could not find a primary shell extension for creating an environment hook\n'}
+[0.006714] (painting_pkg) JobEnded: {'identifier': 'painting_pkg', 'rc': 1}
+[0.007205] (serial_comm_pkg) JobStarted: {'identifier': 'serial_comm_pkg'}
+[0.007232] (serial_comm_pkg) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_python/build.py", line 40, in build\n    additional_hooks = create_environment_hook(\n  File "/usr/lib/python3/dist-packages/colcon_core/shell/__init__.py", line 446, in create_environment_hook\n    raise RuntimeError(\nRuntimeError: Could not find a primary shell extension for creating an environment hook\n'}
+[0.008086] (serial_comm_pkg) JobEnded: {'identifier': 'serial_comm_pkg', 'rc': 1}
+[0.008542] (stepper_pkg) JobStarted: {'identifier': 'stepper_pkg'}
+[0.010904] (stepper_pkg) JobEnded: {'identifier': 'stepper_pkg', 'rc': 'SIGINT'}
+[0.022542] (-) EventReactorShutdown: {}
