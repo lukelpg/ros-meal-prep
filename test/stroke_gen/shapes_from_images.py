@@ -119,7 +119,8 @@ def generate_strokes(approx, shape_name, brush_width):
     """
     Generate strokes for the given shape:
       - If it's a CIRCLE, create concentric arcs (rings).
-      - Otherwise (polygon), create back-and-forth line strokes inside the contour.
+      - Otherwise (polygon), create back-and-forth line strokes inside the contour
+        that are parallel to the longest side.
     
     Returns a list of stroke definitions (strings).
     """
@@ -139,9 +140,7 @@ def generate_circle_arcs(approx, brush_width):
     cx, cy = int(cx), int(cy)
     max_r = int(radius)
 
-    # We'll start from r = brush_width, up to the max radius
     for r in range(0, max_r+1, brush_width):
-        # Full 360 arc
         stroke = f"arc, {cx}, {cy}, {r}, 0, 360, {brush_width}"
         strokes.append(stroke)
     
@@ -149,45 +148,80 @@ def generate_circle_arcs(approx, brush_width):
 
 def generate_polygon_lines(approx, brush_width):
     """
-    For a polygon, fill it with horizontal lines that go back-and-forth.
+    For a polygon (non-circle), fill it with line strokes that run parallel to its
+    longest side. The algorithm is as follows:
+      1. Determine the longest edge and its angle.
+      2. Rotate the polygon so that this edge is horizontal.
+      3. Generate horizontal scanlines (in the rotated space) at intervals of brush_width.
+      4. Compute intersections of each scanline with the rotated polygon edges.
+      5. Transform the line endpoints back to the original coordinate system.
+      
     Stroke format: "line, x1, y1, x2, y2, brushWidth"
     """
     pts = approx.reshape(-1, 2)
-    x, y, w, h = cv2.boundingRect(pts)
+    
+    # Find the longest edge and compute its angle
+    longest_edge_length = 0
+    longest_angle = 0
+    n = len(pts)
+    for i in range(n):
+        p1 = pts[i]
+        p2 = pts[(i+1) % n]
+        edge_length = np.linalg.norm(p2 - p1)
+        if edge_length > longest_edge_length:
+            longest_edge_length = edge_length
+            longest_angle = math.atan2(p2[1] - p1[1], p2[0] - p1[0])
+    
+    # Rotation matrix to rotate by -longest_angle
+    cos_theta = math.cos(longest_angle)
+    sin_theta = math.sin(longest_angle)
+    R = np.array([[cos_theta, sin_theta],
+                  [-sin_theta, cos_theta]])
+    
+    # Rotate all points
+    pts_rotated = np.dot(pts, R.T)
+    
+    # Determine bounding box in rotated coordinates
+    min_y = np.min(pts_rotated[:,1])
+    max_y = np.max(pts_rotated[:,1])
     
     strokes = []
-    y_end = y + h
-
-    # For each horizontal line at intervals of 'brush_width'
-    for scan_y in range(y, y_end+1, brush_width):
-        # Find intersections of the horizontal line with the polygon edges
-        intersection_xs = []
-        for i in range(len(pts)):
-            x1, y1 = pts[i]
-            x2, y2 = pts[(i + 1) % len(pts)]
-            
-            # Check if the segment (x1,y1)-(x2,y2) intersects y=scan_y
-            # We'll do a standard bounding check first
-            if (y1 <= scan_y < y2) or (y2 <= scan_y < y1):
-                # Edge is crossing that horizontal line
-                dy = float(y2 - y1)
-                dx = float(x2 - x1)
-                if abs(dy) < 1e-6:  # practically no slope
+    start_y = int(math.floor(min_y))
+    end_y = int(math.ceil(max_y))
+    
+    # For each scanline in rotated coordinates (parallel to the longest edge)
+    for scan_y in range(start_y, end_y+1, brush_width):
+        intersections = []
+        # Loop over edges in rotated coordinates
+        for i in range(n):
+            p1 = pts_rotated[i]
+            p2 = pts_rotated[(i+1) % n]
+            # Check if the scanline y=scan_y intersects the edge
+            if (p1[1] <= scan_y and p2[1] > scan_y) or (p2[1] <= scan_y and p1[1] > scan_y):
+                if abs(p2[1] - p1[1]) < 1e-6:
                     continue
-                t = (scan_y - y1) / dy
-                intersect_x = x1 + t * dx
-                intersection_xs.append(intersect_x)
+                t = (scan_y - p1[1]) / (p2[1] - p1[1])
+                intersect_x = p1[0] + t * (p2[0] - p1[0])
+                intersections.append(intersect_x)
         
-        # Sort intersection points along X
-        intersection_xs.sort()
-
-        # Pair up the intersection points
-        for i in range(0, len(intersection_xs)-1, 2):
-            x_left = int(math.floor(intersection_xs[i]))
-            x_right = int(math.ceil(intersection_xs[i+1]))
-            if x_left == x_right:
-                continue
-            stroke = f"line, {x_left}, {scan_y}, {x_right}, {scan_y}, {brush_width}"
+        intersections.sort()
+        
+        # Pair up intersections to form line segments
+        for j in range(0, len(intersections)-1, 2):
+            x_left = intersections[j]
+            x_right = intersections[j+1]
+            # Define endpoints in rotated coordinates
+            pt1_rot = np.array([x_left, scan_y])
+            pt2_rot = np.array([x_right, scan_y])
+            
+            # Inverse rotation matrix (rotation by longest_angle)
+            R_inv = np.array([[cos_theta, -sin_theta],
+                              [sin_theta, cos_theta]])
+            pt1_orig = np.dot(R_inv, pt1_rot)
+            pt2_orig = np.dot(R_inv, pt2_rot)
+            pt1 = (int(round(pt1_orig[0])), int(round(pt1_orig[1])))
+            pt2 = (int(round(pt2_orig[0])), int(round(pt2_orig[1])))
+            stroke = f"line, {pt1[0]}, {pt1[1]}, {pt2[0]}, {pt2[1]}, {brush_width}"
             strokes.append(stroke)
     
     return strokes
@@ -309,4 +343,4 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
 
 # Run shape detection
 if __name__ == "__main__":
-    detect_shapes(inputImage, epsilon_factor=0.02, min_area=100)
+    detect_shapes(inputImage, epsilon_factor=0.01, min_area=100)
