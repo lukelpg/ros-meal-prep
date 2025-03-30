@@ -2,7 +2,7 @@
 
 # File names for intermediate and output images
 location="/home/luke/Projects/robots/ros-meal-prep/src/image_processing_pkg/image_processing_pkg/images/"
-inputImage = f"{location}red_x.png"
+inputImage = f"{location}blue_x.png"
 edgesImage = f"{location}roughEdges.png"
 closedEdgesImage = f"{location}closedEdges.png"
 isolatedContours = f"{location}isolatedContours.png"
