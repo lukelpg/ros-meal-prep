@@ -23,7 +23,7 @@ def generate_circle_arcs(approx, brush_width):
     cx, cy = int(cx), int(cy)
     max_r = int(radius)
     for r in range(0, max_r+1, brush_width):
-        stroke = f"arc, {cx}, {cy}, {r}, 0, 360, {brush_width}"
+        stroke = f"arc, {cx}, {cy}, {r}, 0, 360, 200"
         strokes.append(stroke)
     return strokes
 
@@ -78,6 +78,6 @@ def generate_polygon_lines(approx, brush_width):
             pt2_orig = np.dot(R_inv, pt2_rot)
             pt1 = (int(round(pt1_orig[0])), int(round(pt1_orig[1])))
             pt2 = (int(round(pt2_orig[0])), int(round(pt2_orig[1])))
-            stroke = f"line, {pt1[0]}, {pt1[1]}, {pt2[0]}, {pt2[1]}, {brush_width}"
+            stroke = f"line, {pt1[0]}, {pt1[1]}, {pt2[0]}, {pt2[1]}, 500"
             strokes.append(stroke)
     return strokes
