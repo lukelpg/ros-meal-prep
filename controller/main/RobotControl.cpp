@@ -74,6 +74,13 @@ void RobotControl::loop() {
 
 // New function to check if all waypoints have been completed
 bool RobotControl::hasCompletedWaypoints() {
-//    Serial.println((_currentWaypointIndex >= _waypointCount));
+    bool completed = (_currentWaypointIndex >= _waypointCount);
+    Serial.print("Waypoints completed? ");
+    Serial.print(completed ? "YES" : "NO");
+    Serial.print(" (Current: ");
+    Serial.print(_currentWaypointIndex);
+    Serial.print(" / Total: ");
+    Serial.print(_waypointCount);
+    Serial.println(")");
     return _currentWaypointIndex >= _waypointCount;
 }
