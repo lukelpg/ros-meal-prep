@@ -43,11 +43,12 @@ void setup() {
     // generateRandomWaypoints(10);  // Generate 10 random waypoints
 
     // Example square
-    // robot.addWaypoint(-200, -200, 0);
-    // robot.addWaypoint(-800, -200, 0);
-    // robot.addWaypoint(-800, -800, 0);  
-    // robot.addWaypoint(-200, -800, 0);
-    // robot.addWaypoint(-200, -200, 0);  
+//     robot.addWaypoint(-200, -200, 0);
+//     robot.addWaypoint(-800, -200, 0);
+//     robot.addWaypoint(-800, -800, 0);  
+//     robot.addWaypoint(-200, -800, 0);
+//     robot.addWaypoint(-200, -200, 0);
+//     isMoving=true;
 }
 
 void loop() {

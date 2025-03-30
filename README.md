@@ -21,10 +21,12 @@ sudo colcon build
 source install/setup.bash
 ```
 
-Example running stepper node:
+Run all 4 nodes:
 ``` 
-ros2 run stepper_pkg stepper
-ros2 run stepper_pkg faceTrack
+ros2 run image_processing_pkg image_processing_node
+ros2 run painting_pkg painting_node
+TEST NODE?? <!-- ros2 run serial_comm_pkg waypoint_publisher --> TEST NODE??
+ros2 run serial_comm_pkg serial_comm
 ``` 
 
 ## Git Fix
@@ -60,6 +62,17 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
     - Expand stroke types (Bezier, complex splines)
 
 - Define inputs and outputs of ROS nodes clearly for scalability (DOING BELOW)
+- 3 ROS nodes
+    - ros2 run image_processing_pkg image_processing_node
+        - Publishing scaled strokes one by one (to topic: 'paint_command')
+    - ros2 run painting_pkg painting_node
+        - Subscribed to topic 'paint_command'
+        - Publishing stroke a list of waypoints one by one (to topic: 'waypoints_topic')
+    - TEST NODE?? ros2 run serial_comm_pkg waypoint_publisher TEST NODE??
+    - ros2 run serial_comm_pkg serial_comm
+        - Subscribed to topic 'waypoints_topic'
+        - Sending (over serial) MOVE instructions (waypoints) one by one and then 'GO' to signal the the complete stroke has been sent
+            - Will do this for each stroke 
 
 ## Components
 ### Image Processing

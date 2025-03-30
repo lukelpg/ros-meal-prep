@@ -2,7 +2,7 @@
 
 # File names for intermediate and output images
 location="/home/luke/Projects/robots/ros-meal-prep/src/image_processing_pkg/image_processing_pkg/images/"
-inputImage = f"{location}linux.png"
+inputImage = f"{location}red_x.png"
 edgesImage = f"{location}roughEdges.png"
 closedEdgesImage = f"{location}closedEdges.png"
 isolatedContours = f"{location}isolatedContours.png"
@@ -18,4 +18,4 @@ workspace_bounds = {
 }
 
 # Brush width used for stroke spacing
-BRUSH_WIDTH = 10
+BRUSH_WIDTH = 45

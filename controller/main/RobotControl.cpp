@@ -29,7 +29,7 @@ void RobotControl::moveTo(int x, int y, int z) {
 void RobotControl::addWaypoint(int x, int y, int z) {
     if (_waypointCount < MAX_WAYPOINTS) {
         _waypoints[_waypointCount][0] = x;
-        _waypoints[_waypointCount][1] = y;
+        _waypoints[_waypointCount][1] = y+0;
         _waypoints[_waypointCount][2] = z;
         _waypointCount++;
     }

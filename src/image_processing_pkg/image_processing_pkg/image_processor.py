@@ -117,7 +117,7 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
 
 if __name__ == "__main__":
     # For standalone testing
-    strokes = detect_shapes("linux.png", epsilon_factor=0.01, min_area=100)
+    strokes = detect_shapes("linux.png", epsilon_factor=0.1, min_area=100)
     print("Generated strokes:")
     for stroke in strokes:
         print(stroke)
