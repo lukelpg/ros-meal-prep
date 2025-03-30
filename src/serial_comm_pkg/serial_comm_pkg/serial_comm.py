@@ -53,6 +53,8 @@ class SerialCommNode(Node):
             self.get_logger().info(f"Waypoints parsed and stored: {self.waypoints}")
 
             # Send the first waypoint to trigger sending
+            self.current_waypoint=0
+            self.waiting_for_ack = False
             self.send_next_waypoint()
 
     def send_next_waypoint(self):
@@ -69,6 +71,9 @@ class SerialCommNode(Node):
                 self.get_logger().info("Waiting for acknowledgment before sending the next waypoint.")
         else:
             self.get_logger().info("All waypoints sent. Sending GO signal to start robot.")
+            self.waypoints = []  # List to store received waypoints
+            self.current_waypoint = 0  # Pointer to the current waypoint
+            self.waiting_for_ack = False 
             self.send_go_signal()
 
     def send_go_signal(self):
