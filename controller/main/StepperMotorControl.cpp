@@ -26,15 +26,23 @@ bool StepperMotorControl::isAtTarget() {
 }
 
 void StepperMotorControl::home() {
-    // Homing function: move towards the limit switch
+    Serial.println("Starting homing for motor");
     while (digitalRead(_limitSwitchPin) == 0) {
-        Serial.println(digitalRead(_limitSwitchPin));
-        _stepper.moveTo(_homePosition);  // Move towards the switch
+        // Only print every few iterations to avoid spamming
+        static unsigned long lastPrint = 0;
+        if (millis() - lastPrint > 500) {
+            Serial.print("Limit switch state: ");
+            Serial.println(digitalRead(_limitSwitchPin));
+            lastPrint = millis();
+        }
+        _stepper.moveTo(_homePosition);
         _stepper.run();
     }
-    _stepper.setCurrentPosition(0);  // Set position to 0 when the limit switch is hit
-    _stepper.stop();  // Stop motor after homing
+    Serial.println("Homing complete");
+    _stepper.setCurrentPosition(0);
+    _stepper.stop();
 }
+
 
 void StepperMotorControl::stop() {
     _stepper.stop();

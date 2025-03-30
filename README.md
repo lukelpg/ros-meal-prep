@@ -60,6 +60,7 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
 - Write algo for generating sequence of strokes from a picture (big one lol)
     - Idea: Picture -> *Something?* -> Layers? -> Shapes? -> Strokes -> Curves -> Coords. Seq. -> Inst. -> Axial Movement
     - Expand stroke types (Bezier, complex splines)
+- Fix bug where order motors are homed matters
 
 - Define inputs and outputs of ROS nodes clearly for scalability (DOING BELOW)
 - 3 ROS nodes
@@ -71,6 +72,7 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
     - TEST NODE?? ros2 run serial_comm_pkg waypoint_publisher TEST NODE??
     - ros2 run serial_comm_pkg serial_comm
         - Subscribed to topic 'waypoints_topic'
+        - Publishing to 'serial_in'?
         - Sending (over serial) MOVE instructions (waypoints) one by one and then 'GO' to signal the the complete stroke has been sent
             - Will do this for each stroke 
 
