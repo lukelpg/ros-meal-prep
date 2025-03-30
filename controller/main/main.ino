@@ -82,7 +82,7 @@ void loop() {
 
     // If the robot is moving, call its loop method.
     if (isMoving) {
-        Serial.println("Running robot loop");
+//        Serial.println("Running robot loop");
         robot.loop();
 
         // Check if all waypoints have been processed
