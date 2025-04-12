@@ -4,7 +4,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 from image_processing_pkg.image_processor import detect_shapes
-from image_processing_pkg.config import workspace_bounds
+from image_processing_pkg.config import workspace_bounds, inputImage
 from image_processing_pkg.scaling import scale_stroke
 from image_processing_pkg.color_utils import get_closest_palette_color, generate_dip_command, palette
 
@@ -16,7 +16,7 @@ class ImageProcessingNode(Node):
 
         # Process the image to generate strokes and get image dimensions.
         # Each stroke is now a tuple: (stroke_definition, shape_color)
-        self.strokes, self.image_dims = detect_shapes("blue_x.png", epsilon_factor=0.01, min_area=100)
+        self.strokes, self.image_dims = detect_shapes(inputImage, epsilon_factor=0.01, min_area=100)
         
         self.current_stroke_index = 0
         self.current_dip_commands = []  # Queue for dip commands

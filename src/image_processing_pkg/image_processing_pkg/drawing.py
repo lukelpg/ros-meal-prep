@@ -50,6 +50,7 @@ def draw_thin_strokes_image(img, shapes, brush_width=10, output_path="thinStroke
     cv2.imwrite(output_path, thin_image)
     print(f"Thinner strokes image saved as {output_path}")
 
+
 def draw_workspace_strokes_image(all_strokes, image_dims, workspace_bounds, output_path="workspace_strokes.png"):
     """
     Creates a workspace canvas by scaling all strokes to the defined workspace bounds.
@@ -59,8 +60,11 @@ def draw_workspace_strokes_image(all_strokes, image_dims, workspace_bounds, outp
     
     print("Scaled stroke definitions (x,y should be between -1000 and 0):")
     scaled_strokes_list = []
-    for stroke in all_strokes:
-        scaled = scale_stroke(stroke, image_dims, workspace_bounds)
+    for stroke_tuple in all_strokes:
+        # Unpack the tuple: stroke_string and shape_color (we ignore shape_color here)
+        stroke_str, _ = stroke_tuple
+        # Pass only the stroke string to scale_stroke
+        scaled = scale_stroke(stroke_str, image_dims, workspace_bounds)
         print(scaled)
         scaled_strokes_list.append(scaled)
     
