@@ -3,9 +3,25 @@
 import cv2
 import numpy as np
 import math
-from image_processing_pkg.config import edgesImage, closedEdgesImage, isolatedContours, shapesOnImage, colouredShapes, thinStrokesImage, workspace_bounds, BRUSH_WIDTH
+from image_processing_pkg.config import (
+    inputImage, 
+    edgesImage, 
+    closedEdgesImage, 
+    isolatedContours, 
+    shapesOnImage, 
+    colouredShapes, 
+    thinStrokesImage,
+    workspace_bounds,
+    BRUSH_WIDTH
+)
 from image_processing_pkg.stroke_mapping import generate_strokes
-from image_processing_pkg.drawing import draw_contours_and_shapes, draw_thin_strokes_image, draw_workspace_strokes_image, save_images, print_shape_counts
+from image_processing_pkg.drawing import (
+    draw_contours_and_shapes, 
+    draw_thin_strokes_image, 
+    draw_workspace_strokes_image, 
+    save_images, 
+    print_shape_counts
+)
 
 def load_image(image_path):
     """Loads an image from a given path."""
@@ -89,6 +105,10 @@ def approximate_contours(contours, epsilon_factor=0.01, min_area=500):
     return shapes, shape_counts
 
 def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
+    """
+    Detect shapes in the image and generate stroke definitions. 
+    Each stroke is returned as a tuple (stroke_definition, shape_color) where shape_color is in RGB.
+    """
     img = load_image(image_path)
     if img is None:
         return [], (0, 0)
@@ -109,15 +129,24 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     # Gather stroke definitions from all detected shapes
     all_strokes = []
     for approx, shape_name in shapes:
+        # Compute the mean color for this shape using a mask
+        mask = np.zeros(img.shape[:2], dtype=np.uint8)
+        cv2.drawContours(mask, [approx], -1, 255, thickness=cv2.FILLED)
+        # cv2.mean returns (B, G, R, A); convert to RGB integers
+        mean_color_bgr = cv2.mean(img, mask=mask)[:3]
+        shape_color = (int(mean_color_bgr[2]), int(mean_color_bgr[1]), int(mean_color_bgr[0]))
+        
         strokes = generate_strokes(approx, shape_name, BRUSH_WIDTH)
-        all_strokes.extend(strokes)
+        # Attach the shape_color to each stroke generated for this shape
+        for stroke in strokes:
+            all_strokes.append((stroke, shape_color))
     
-    draw_workspace_strokes_image(all_strokes, image_dims, workspace_bounds)
+    draw_workspace_strokes_image(all_strokes, image_dims, workspace_bounds, "workspace_strokes.png")
     return all_strokes, image_dims
 
 if __name__ == "__main__":
     # For standalone testing
-    strokes = detect_shapes("linux.png", epsilon_factor=0.1, min_area=100)
+    strokes, dims = detect_shapes(inputImage, epsilon_factor=0.1, min_area=100)
     print("Generated strokes:")
-    for stroke in strokes:
-        print(stroke)
+    for stroke, color in strokes:
+        print(stroke, color)
