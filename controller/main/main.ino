@@ -11,26 +11,53 @@ RobotControl robot(&motorX, &motorY, &motorZ);
 
 bool isMoving = false;
 
-// Function to generate random waypoints within the defined bounds
-void generateRandomWaypoints(int numWaypoints) {
-    for (int i = 0; i < numWaypoints; i++) {
-        // Generate random coordinates within the defined bounds
-        int x = random(-1000, 1);  // x in range [0, -1000]
-        int y = random(-1000, 1);  // y in range [0, -1000]
-        int z = random(0, 6001);   // z in range [0, 6000]
+// This function encapsulates the logic to process a command string
+void processCommand(String command) {
+    if (command.startsWith("MOVE")) {
+        // Parse the MOVE command and extract coordinates
+        int firstComma = command.indexOf(',');
+        int secondComma = command.indexOf(',', firstComma + 1);
+        int thirdComma = command.indexOf(',', secondComma + 1);
 
-        // Add the generated waypoint to the robot's path
+        int x = command.substring(firstComma + 1, secondComma).toInt();
+        int y = command.substring(secondComma + 1, thirdComma).toInt();
+        int z = command.substring(thirdComma + 1).toInt();
+
+        // Add the waypoint to the robot's path
         robot.addWaypoint(x, y, z);
-        
-        // Optionally print the waypoints to the serial monitor
-        Serial.print("Waypoint ");
-        Serial.print(i + 1);
-        Serial.print(": x=");
+
+        Serial.print("Waypoint added: ");
         Serial.print(x);
-        Serial.print(", y=");
+        Serial.print(", ");
         Serial.print(y);
-        Serial.print(", z=");
+        Serial.print(", ");
         Serial.println(z);
+        Serial.println("ACK");
+    }
+    else if (command == "GO") {
+        // Start the robot's movement
+        isMoving = true;
+        Serial.println("GO signal received. Robot will start moving.");
+    }
+}
+
+// This function simulates sending a test square as a list of commands
+void simulateTestSquare() {
+    // Define the test square commands
+    String testCommands[] = {
+        "MOVE,-200,-200,0",
+        "MOVE,-800,-200,0",
+        "MOVE,-800,-800,0",
+        "MOVE,-200,-800,0",
+        "MOVE,-200,-200,0",
+        "GO"
+    };
+    const int numCommands = sizeof(testCommands) / sizeof(testCommands[0]);
+
+    // Loop through each test command and process it
+    for (int i = 0; i < numCommands; i++) {
+        processCommand(testCommands[i]);
+        delay(100);  // Optional delay between commands
     }
 }
 
@@ -39,58 +66,29 @@ void setup() {
     robot.setup();
     Serial.println("Robot setup complete");
 
-    // Generate and add random waypoints to the robot's path
-    // generateRandomWaypoints(10);  // Generate 10 random waypoints
-
-    // Example square
-    // robot.addWaypoint(-200, -200, 0);
-    // robot.addWaypoint(-800, -200, 0);
-    // robot.addWaypoint(-800, -800, 0);  
-    // robot.addWaypoint(-200, -800, 0);
-    // robot.addWaypoint(-200, -200, 0);  
+    // Uncomment one of these options:
+    // Option 1: Manually send commands via the Serial Monitor.
+    // Option 2: Simulate the test square commands.
+//    simulateTestSquare();
 }
 
 void loop() {
-    // Check if there is incoming serial data
+    // If data is available on the serial port, process it.
     if (Serial.available()) {
-        String command = Serial.readStringUntil('\n');  // Read the incoming command
-
-        if (command.startsWith("MOVE")) {
-            // Parse the MOVE command and extract coordinates
-            int firstComma = command.indexOf(',');
-            int secondComma = command.indexOf(',', firstComma + 1);
-            int thirdComma = command.indexOf(',', secondComma + 1);
-            
-            int x = command.substring(firstComma + 1, secondComma).toInt();
-            int y = command.substring(secondComma + 1, thirdComma).toInt();
-            int z = command.substring(thirdComma + 1).toInt();
-            
-            // Add the waypoint to the robot's path
-            robot.addWaypoint(x, y, z);
-            Serial.print("Waypoint added: ");
-            Serial.print(x);
-            Serial.print(", ");
-            Serial.print(y);
-            Serial.print(", ");
-            Serial.println(z);
-
-            Serial.println("ACK");
-        }
-        else if (command == "GO") {
-            // When the GO signal is received, start the robot's movement
-            isMoving = true;
-            Serial.println("GO signal received. Robot will start moving.");
-        }
+        String command = Serial.readStringUntil('\n');
+        command.trim();
+        processCommand(command);
     }
 
-    // If the robot is in moving mode and there are waypoints in the queue
+    // If the robot is moving, call its loop method.
     if (isMoving) {
-        robot.loop();  // This will process the movement
+//        Serial.println("Running robot loop");
+        robot.loop();
 
-        // TODO: Something like this. Check if the robot has completed all the waypoints (you may need to track this in your code)
-        // if (robot.hasCompletedWaypoints()) {  // Assuming the robot has a function that tracks if it completed all waypoints
-        //     Serial.println("DONE");  // Send the DONE message back to the Pi
-        //     isMoving = false;  // Stop the robot movement
-        // }
+        // Check if all waypoints have been processed
+        if (robot.hasCompletedWaypoints()) {
+            Serial.println("DONE");
+            isMoving = false;
+        }
     }
 }

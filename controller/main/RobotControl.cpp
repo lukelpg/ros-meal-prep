@@ -13,9 +13,13 @@ void RobotControl::setup() {
 
 void RobotControl::homeMotors() {
     if (!_home) {
+//        Serial.println("Motor X");
         _motorX->home();
+//        Serial.println("Motor Y");
         _motorY->home();
+//        Serial.println("Motor Z");
         _motorZ->home();
+//        Serial.println("Finished Homing");
         _home = true;
     }
 }
@@ -36,14 +40,20 @@ void RobotControl::addWaypoint(int x, int y, int z) {
 }
 
 void RobotControl::moveToNextWaypoint() {
+//    Serial.println("Move to next waypoint");
     if (_currentWaypointIndex < _waypointCount) {
-        moveTo(_waypoints[_currentWaypointIndex][0], _waypoints[_currentWaypointIndex][1], _waypoints[_currentWaypointIndex][2]);
+        moveTo(_waypoints[_currentWaypointIndex][0],
+               _waypoints[_currentWaypointIndex][1],
+               _waypoints[_currentWaypointIndex][2]);
     }
 }
 
 void RobotControl::loop() {
+  
     if (!_home) {
+//        Serial.println("Homing");
         homeMotors();  // Home the motors at the start
+//        Serial.println("Out of the function");
     }
 
     if (_currentWaypointIndex < _waypointCount) {
@@ -56,8 +66,21 @@ void RobotControl::loop() {
         }
     }
 
-    // Move the motors and call their run functions
+    // Call the run functions to progress motor movements
     _motorX->run();
     _motorY->run();
     _motorZ->run();
+}
+
+// New function to check if all waypoints have been completed
+bool RobotControl::hasCompletedWaypoints() {
+    bool completed = (_currentWaypointIndex >= _waypointCount);
+//    Serial.print("Waypoints completed? ");
+//    Serial.print(completed ? "YES" : "NO");
+//    Serial.print(" (Current: ");
+//    Serial.print(_currentWaypointIndex);
+//    Serial.print(" / Total: ");
+//    Serial.print(_waypointCount);
+//    Serial.println(")");
+    return _currentWaypointIndex >= _waypointCount;
 }

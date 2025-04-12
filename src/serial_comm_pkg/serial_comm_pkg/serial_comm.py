@@ -29,47 +29,77 @@ class SerialCommNode(Node):
         # Timer to receive data periodically
         self.timer = self.create_timer(0.1, self.receive_serial_data)
 
-        self.waypoints = []  # List to store received waypoints
-        self.current_waypoint = 0  # Pointer to the current waypoint
-        self.waiting_for_ack = False  # Flag to check if we're waiting for an acknowledgment
+        # Current batch state
+        self.waypoints = []          # List to store the active batch of waypoints
+        self.current_waypoint = 0    # Pointer into the active batch
+        self.waiting_for_ack = False # Flag to indicate waiting for an ACK
+
+        # Queue for incoming waypoint batches
+        self.waypoint_queue = []     
 
     def handle_incoming_waypoints(self, msg):
-        """Handles incoming waypoint messages and stores them for sending."""
+        """Handles incoming waypoint messages and queues them for sending."""
         self.get_logger().info(f"Received waypoints: {msg.data}")
 
         if msg.data.startswith("WAYPOINTS"):
             waypoints_data = msg.data[len("WAYPOINTS"):].strip()
-            waypoints = waypoints_data.split(";")  # Expecting each waypoint to be separated by a semicolon
-            self.waypoints.clear()  # Clear previous waypoints
-
-            for waypoint in waypoints:
-                if waypoint == 'GO':
-                    self.waypoints.append(f"GO")
+            # Split into individual waypoint strings (assumes semicolon-separated)
+            waypoints_list = waypoints_data.split(";")
+            new_batch = []
+            for waypoint in waypoints_list:
+                waypoint = waypoint.strip()
+                if not waypoint:
+                    continue
+                if waypoint.upper() == 'GO':
+                    new_batch.append("GO")
                     break
+                # Expect each waypoint in the form "x,y,z"
+                try:
+                    x, y, z = waypoint.split(",")
+                    new_batch.append(f"MOVE,{x.strip()},{y.strip()},{z.strip()}")
+                except ValueError:
+                    self.get_logger().error(f"Bad waypoint format: {waypoint}")
+            self.get_logger().info(f"New batch parsed: {new_batch}")
 
-                # Format each waypoint as "MOVE,<x>,<y>,<z>"
-                x, y, z = waypoint.split(",")
-                self.waypoints.append(f"MOVE,{x},{y},{z}")
-            self.get_logger().info(f"Waypoints parsed and stored: {self.waypoints}")
-
-            # Send the first waypoint to trigger sending
-            self.send_next_waypoint()
+            # If no current batch is active (i.e. finished processing) then load this batch.
+            if not self.waypoints and not self.waiting_for_ack:
+                self.waypoints = new_batch
+                self.current_waypoint = 0
+                self.waiting_for_ack = False
+                self.send_next_waypoint()
+            else:
+                # Otherwise, queue the new batch.
+                self.waypoint_queue.append(new_batch)
+                self.get_logger().info("Current batch in progress; queued new batch.")
 
     def send_next_waypoint(self):
-        """Sends the next waypoint to the microcontroller."""
+        """Sends the next waypoint from the active batch to the microcontroller."""
         if self.current_waypoint < len(self.waypoints):
-            # Send the next waypoint if not already waiting for acknowledgment
             if not self.waiting_for_ack:
                 msg = self.waypoints[self.current_waypoint]
                 self.get_logger().info(f"Sending waypoint: {msg}")
                 self.serial_interface.send_data(msg)
-                self.waiting_for_ack = True  # Set flag to indicate we're waiting for acknowledgment
+                self.waiting_for_ack = True
                 self.current_waypoint += 1
             else:
                 self.get_logger().info("Waiting for acknowledgment before sending the next waypoint.")
         else:
-            self.get_logger().info("All waypoints sent. Sending GO signal to start robot.")
+            self.get_logger().info("All waypoints in current batch sent. Sending GO signal.")
             self.send_go_signal()
+            # After sending GO, load the next batch from the queue if available.
+            if self.waypoint_queue:
+                next_batch = self.waypoint_queue.pop(0)
+                self.get_logger().info(f"Loading next batch: {next_batch}")
+                self.waypoints = next_batch
+                self.current_waypoint = 0
+                self.waiting_for_ack = False
+                # Start sending the new batch.
+                self.send_next_waypoint()
+            else:
+                # No new batch queued; reset state.
+                self.waypoints = []
+                self.current_waypoint = 0
+                self.waiting_for_ack = False
 
     def send_go_signal(self):
         """Sends the GO signal to start the robot movement."""
@@ -82,12 +112,25 @@ class SerialCommNode(Node):
         if data:
             self.get_logger().info(f"Received from Arduino: {data}")
             self.publish_received_data(data)
-
-            # Handle the acknowledgment to proceed with the next waypoint
-            if "ACK" in data:  # Example acknowledgment message from robot (e.g., "ACK")
+            # If an acknowledgment is received, clear the waiting flag and send the next waypoint.
+            if "ACK" in data:
                 self.get_logger().info("Acknowledgment received.")
-                self.waiting_for_ack = False  # Reset the flag to allow sending the next waypoint
+                self.waiting_for_ack = False
                 self.send_next_waypoint()
+            # If the DONE signal is received, clear the current batch and load the next queued batch if available.
+            if "DONE" in data:
+                self.get_logger().info("DONE received. Finishing current batch and starting next batch if available.")
+                self.waiting_for_ack = False
+                # Clear current batch (assuming DONE signals that the current batch is complete)
+                self.waypoints = []
+                self.current_waypoint = 0
+                if self.waypoint_queue:
+                    next_batch = self.waypoint_queue.pop(0)
+                    self.get_logger().info(f"Loading next batch: {next_batch}")
+                    self.waypoints = next_batch
+                    self.send_next_waypoint()
+                else:
+                    self.get_logger().info("No new waypoint batch queued.")
 
     def publish_received_data(self, data):
         """Publishes received data to a ROS topic."""
@@ -96,13 +139,12 @@ class SerialCommNode(Node):
         self.publisher.publish(msg)
 
     def on_shutdown(self):
-        """Handles shutdown and closes serial connection."""
+        """Handles shutdown and closes the serial connection."""
         self.serial_interface.disconnect()
 
 def main(args=None):
     rclpy.init(args=args)
     node = SerialCommNode()
-
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
@@ -110,3 +152,6 @@ def main(args=None):
     finally:
         node.on_shutdown()
         rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
