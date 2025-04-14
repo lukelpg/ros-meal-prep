@@ -1,0 +1,22 @@
+[0.846s] Invoking command in '/home/luke/Projects/robots/ros-meal-prep/src/painting_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/painting_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/painting_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/install.log --single-version-externally-managed install_data
+[0.958s] running egg_info
+[0.958s] writing ../../build/painting_pkg/painting_pkg.egg-info/PKG-INFO
+[0.958s] writing dependency_links to ../../build/painting_pkg/painting_pkg.egg-info/dependency_links.txt
+[0.958s] writing entry points to ../../build/painting_pkg/painting_pkg.egg-info/entry_points.txt
+[0.959s] writing requirements to ../../build/painting_pkg/painting_pkg.egg-info/requires.txt
+[0.959s] writing top-level names to ../../build/painting_pkg/painting_pkg.egg-info/top_level.txt
+[0.960s] reading manifest file '../../build/painting_pkg/painting_pkg.egg-info/SOURCES.txt'
+[0.960s] adding license file 'LICENSE'
+[0.960s] writing manifest file '../../build/painting_pkg/painting_pkg.egg-info/SOURCES.txt'
+[0.960s] running build
+[0.960s] running build_py
+[0.961s] running install
+[0.961s] running install_lib
+[0.962s] running install_data
+[0.962s] running install_egg_info
+[0.963s] removing '/home/luke/Projects/robots/ros-meal-prep/install/painting_pkg/lib/python3.10/site-packages/painting_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[0.963s] Copying ../../build/painting_pkg/painting_pkg.egg-info to /home/luke/Projects/robots/ros-meal-prep/install/painting_pkg/lib/python3.10/site-packages/painting_pkg-0.0.0-py3.10.egg-info
+[0.964s] running install_scripts
+[0.978s] Installing painting_node script to /home/luke/Projects/robots/ros-meal-prep/install/painting_pkg/lib/painting_pkg
+[0.978s] writing list of installed files to '/home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/install.log'
+[1.007s] Invoked command in '/home/luke/Projects/robots/ros-meal-prep/src/painting_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/painting_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/painting_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/painting_pkg/install.log --single-version-externally-managed install_data
