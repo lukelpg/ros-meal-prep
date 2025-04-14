@@ -12,7 +12,10 @@ from image_processing_pkg.config import (
     colouredShapes, 
     thinStrokesImage,
     workspace_bounds,
-    BRUSH_WIDTH
+    BRUSH_WIDTH,
+    palette,
+    DIP_Z,
+    SAFE_Z
 )
 from image_processing_pkg.stroke_mapping import generate_strokes
 from image_processing_pkg.drawing import (
@@ -22,6 +25,7 @@ from image_processing_pkg.drawing import (
     save_images, 
     print_shape_counts
 )
+from image_processing_pkg.color_utils import get_closest_palette_color
 
 def load_image(image_path):
     """Loads an image from a given path."""
@@ -106,8 +110,9 @@ def approximate_contours(contours, epsilon_factor=0.01, min_area=500):
 
 def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     """
-    Detect shapes in the image and generate stroke definitions. 
+    Detect shapes in the image and generate stroke definitions.
     Each stroke is returned as a tuple (stroke_definition, shape_color) where shape_color is in RGB.
+    A new "dip" stroke is inserted at the start of every shape.
     """
     img = load_image(image_path)
     if img is None:
@@ -126,20 +131,37 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     print_shape_counts(shape_counts)
     draw_thin_strokes_image(img, shapes, BRUSH_WIDTH, thinStrokesImage)
     
-    # Gather stroke definitions from all detected shapes
+    # Generate stroke definitions along with the mean color for each shape
     all_strokes = []
     for approx, shape_name in shapes:
-        # Compute the mean color for this shape using a mask
+        # Compute the mean color for this shape using a mask.
         mask = np.zeros(img.shape[:2], dtype=np.uint8)
         cv2.drawContours(mask, [approx], -1, 255, thickness=cv2.FILLED)
-        # cv2.mean returns (B, G, R, A); convert to RGB integers
+        # cv2.mean returns (B, G, R, A); convert to RGB integers.
         mean_color_bgr = cv2.mean(img, mask=mask)[:3]
         shape_color = (int(mean_color_bgr[2]), int(mean_color_bgr[1]), int(mean_color_bgr[0]))
         
+        # Determine the palette color for this shape.
+        required_color_key = get_closest_palette_color(shape_color)
+        color_hex = palette[required_color_key]["hex"]
+        pickup_coords = palette[required_color_key]["coord"]  # (x, y)
+        
+        # Create a dip stroke command.
+        # Format: 
+        #    dip, pickup_x, pickup_y, DIP_Z, safe_x, safe_y, SAFE_Z, color_hex
+        dip_command = f"dip, {pickup_coords[0]}, {pickup_coords[1]}, {DIP_Z}, {pickup_coords[0]}, {pickup_coords[1]}, {SAFE_Z}, {color_hex}"
+        
+        # Start with the dip stroke for this shape.
+        shape_strokes = []
+        shape_strokes.append((dip_command, shape_color))
+        
+        # Generate the normal stroke commands for this shape (line/arc).
         strokes = generate_strokes(approx, shape_name, BRUSH_WIDTH)
-        # Attach the shape_color to each stroke generated for this shape
         for stroke in strokes:
-            all_strokes.append((stroke, shape_color))
+            shape_strokes.append((stroke, shape_color))
+        
+        # Append all strokes for this shape to the global list.
+        all_strokes.extend(shape_strokes)
     
     draw_workspace_strokes_image(all_strokes, image_dims, workspace_bounds, "workspace_strokes.png")
     return all_strokes, image_dims

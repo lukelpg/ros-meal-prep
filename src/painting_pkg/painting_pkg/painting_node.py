@@ -10,20 +10,20 @@ class PaintingNode(Node):
     def __init__(self):
         super().__init__('painting_node')
 
-        # Define workspace bounds
+        # Define workspace bounds.
         workspace_bounds = {
             "x": (0, -1000),
             "y": (0, -1000),
             "z": (0, 6000)
         }
 
-        # Initialize components with workspace bounds
+        # Initialize components with workspace bounds.
         self.stroke_generator = StrokeGenerator(workspace_bounds)
         self.curve_processor = CurveProcessor()
         self.coordinate_compiler = CoordinateCompiler()
         self.instruction_publisher = InstructionPublisher()
 
-        # Subscribe to stroke commands (can include multiple strokes separated by semicolons)
+        # Subscribe to stroke commands (can include multiple strokes separated by semicolons).
         self.create_subscription(String, 'paint_command', self.handle_command, 10)
 
     def handle_command(self, msg):
@@ -32,12 +32,14 @@ class PaintingNode(Node):
         """
         self.get_logger().info(f"Received command: {msg.data}")
 
-        # Split incoming message into individual stroke commands
+        # Split incoming message into individual stroke commands.
         stroke_commands = [cmd.strip() for cmd in msg.data.split(';') if cmd.strip()]
         all_stroke_points = []
         
         for stroke_command in stroke_commands:
             stroke_type, params, curve_depth = self.parse_command(stroke_command)
+            if stroke_type is None:
+                continue
             self.get_logger().info(
                 f"Parsed stroke type: {stroke_type}, Params: {params}, Depth: {curve_depth}"
             )
@@ -50,7 +52,7 @@ class PaintingNode(Node):
 
             if not stroke_points:
                 self.get_logger().error("No valid stroke points generated for command: " + stroke_command)
-                continue  # Process next stroke command if available
+                continue
 
             all_stroke_points.extend(stroke_points)
 
@@ -66,32 +68,41 @@ class PaintingNode(Node):
         """Parses a stroke command and extracts stroke type, parameters, and curve depth."""
         self.get_logger().info(f"Parsing command: {command}")
         parts = command.split(',')
-        stroke_type = parts[0].strip()
-        param_values = [float(x.strip()) for x in parts[1:]]
-
-        # For arc strokes: expect at least 5 parameters (center_x, center_y, radius, start_angle, end_angle)
-        # Optionally, the last parameter is the curve depth.
-        if stroke_type.lower() == "arc":
-            if len(param_values) >= 6:
-                curve_depth = param_values.pop()  # Use last value as depth if provided
+        stroke_type = parts[0].strip().lower()
+        
+        if stroke_type == "arc":
+            # Expect at least 5 numeric parameters; optionally a 6th is curve depth.
+            if len(parts) >= 7:
+                # Last parameter is curve depth.
+                param_values = [float(x.strip()) for x in parts[1:-1]]
+                curve_depth = float(parts[-1].strip())
             else:
-                curve_depth = 0  # Default depth if not specified
-
+                param_values = [float(x.strip()) for x in parts[1:]]
+                curve_depth = 0
             center = (param_values[0], param_values[1])
             radius = param_values[2]
             start_angle = param_values[3]
             end_angle = param_values[4]
             params = [center, radius, start_angle, end_angle]
+        elif stroke_type == "dip":
+            # Expect 7 parameters: pickup_x, pickup_y, pickup_z, safe_x, safe_y, safe_z, color_hex.
+            if len(parts) < 8:
+                self.get_logger().error("Dip command requires 7 parameters.")
+                return None, None, None
+            pickup = (float(parts[1].strip()), float(parts[2].strip()), float(parts[3].strip()))
+            safe = (float(parts[4].strip()), float(parts[5].strip()), float(parts[6].strip()))
+            color_hex = parts[7].strip()
+            params = [pickup[0], pickup[1], pickup[2], safe[0], safe[1], safe[2], color_hex]
+            curve_depth = 0  # Not used for dip strokes.
         else:
             # For line strokes, assume an even number of parameters represent points.
-            # If odd, the last parameter is the curve depth.
+            param_values = [float(x.strip()) for x in parts[1:]]
             if len(param_values) % 2 == 1:
                 curve_depth = param_values.pop()
             else:
                 curve_depth = 0
-
             params = [tuple(param_values[i:i+2]) for i in range(0, len(param_values), 2)]
-
+        
         self.get_logger().info(
             f"Extracted stroke type: {stroke_type}, Params: {params}, Depth: {curve_depth}"
         )

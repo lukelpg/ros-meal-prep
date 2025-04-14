@@ -8,7 +8,7 @@ def hex_to_rgb(hex_str):
 
 def color_distance(c1, c2):
     """Euclidean distance between two RGB colors."""
-    return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
+    return math.sqrt(sum((a - b)**2 for a, b in zip(c1, c2)))
 
 def get_closest_palette_color(shape_color):
     """
@@ -30,24 +30,24 @@ def generate_dip_command(current_pos, palette_coord):
     generate a list of commands to perform the dip motion.
     Commands are formatted as strings, for example:
       - "move_to, x, y, z"
-      - "dip" (for the actual dipping action)
+      - "dip" (for the dipping action)
     """
     commands = []
     
-    # 1. Raise to the safe Z height if not already at or above it
+    # 1. Raise to safe Z if not already at that height.
     if current_pos[2] < SAFE_Z:
         commands.append(f"move_to, {current_pos[0]}, {current_pos[1]}, {SAFE_Z}")
     
-    # 2. Move horizontally to above the palette coordinate at safe Z
+    # 2. Move horizontally above the palette coordinate at safe Z.
     commands.append(f"move_to, {palette_coord[0]}, {palette_coord[1]}, {SAFE_Z}")
     
-    # 3. Lower down to DIP_Z to dip into the color
+    # 3. Lower to DIP_Z to dip into the paint.
     commands.append(f"move_to, {palette_coord[0]}, {palette_coord[1]}, {DIP_Z}")
     
-    # 4. Issue a dip command (could include a dwell or activation)
+    # 4. Perform the dip (could be a dwell command).
     commands.append("dip")
     
-    # 5. Raise back to the safe height
+    # 5. Return to safe Z.
     commands.append(f"move_to, {palette_coord[0]}, {palette_coord[1]}, {SAFE_Z}")
     
     return commands
