@@ -1,0 +1,22 @@
+[0.935s] Invoking command in '/home/luke/Projects/robots/ros-meal-prep/test/ros_testing/stepper_pkg': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/stepper_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/stepper_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/install.log --single-version-externally-managed install_data
+[1.070s] running egg_info
+[1.070s] writing ../../../build/stepper_pkg/stepper_pkg.egg-info/PKG-INFO
+[1.070s] writing dependency_links to ../../../build/stepper_pkg/stepper_pkg.egg-info/dependency_links.txt
+[1.070s] writing entry points to ../../../build/stepper_pkg/stepper_pkg.egg-info/entry_points.txt
+[1.070s] writing requirements to ../../../build/stepper_pkg/stepper_pkg.egg-info/requires.txt
+[1.070s] writing top-level names to ../../../build/stepper_pkg/stepper_pkg.egg-info/top_level.txt
+[1.071s] reading manifest file '../../../build/stepper_pkg/stepper_pkg.egg-info/SOURCES.txt'
+[1.072s] writing manifest file '../../../build/stepper_pkg/stepper_pkg.egg-info/SOURCES.txt'
+[1.072s] running build
+[1.072s] running build_py
+[1.072s] running install
+[1.072s] running install_lib
+[1.073s] running install_data
+[1.073s] running install_egg_info
+[1.074s] removing '/home/luke/Projects/robots/ros-meal-prep/install/stepper_pkg/lib/python3.10/site-packages/stepper_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[1.074s] Copying ../../../build/stepper_pkg/stepper_pkg.egg-info to /home/luke/Projects/robots/ros-meal-prep/install/stepper_pkg/lib/python3.10/site-packages/stepper_pkg-0.0.0-py3.10.egg-info
+[1.075s] running install_scripts
+[1.089s] Installing faceTrack script to /home/luke/Projects/robots/ros-meal-prep/install/stepper_pkg/lib/stepper_pkg
+[1.089s] Installing stepper script to /home/luke/Projects/robots/ros-meal-prep/install/stepper_pkg/lib/stepper_pkg
+[1.090s] writing list of installed files to '/home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/install.log'
+[1.146s] Invoked command in '/home/luke/Projects/robots/ros-meal-prep/test/ros_testing/stepper_pkg' returned '0': PYTHONPATH=/home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/luke/Projects/robots/ros-meal-prep/install/stepper_pkg/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/stepper_pkg build --build-base /home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/build install --record /home/luke/Projects/robots/ros-meal-prep/build/stepper_pkg/install.log --single-version-externally-managed install_data
