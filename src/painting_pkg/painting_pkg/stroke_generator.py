@@ -1,3 +1,5 @@
+# painting_pkg/stroke_generator.py
+
 import numpy as np
 
 class StrokeGenerator:
@@ -13,7 +15,7 @@ class StrokeGenerator:
                 self.z_min <= z <= self.z_max)
 
     def generate_stroke(self, stroke_type, params, curve_depth=0):
-        """Generates stroke points before curve processing, ensuring depth is used."""
+        """Generates stroke points before curve processing."""
         print(f"Generating {stroke_type} stroke with params: {params}, Depth: {curve_depth}")
 
         if stroke_type.lower() == "line":
@@ -27,9 +29,13 @@ class StrokeGenerator:
             return []
 
         print(f"Generated {len(points)} stroke points before filtering.")
-        
-        valid_points = [p for p in points if self.is_within_workspace(p[0], p[1], p[2])]
-        print(f"Remaining {len(valid_points)} valid points after workspace filtering.")
+
+        # Skip workspace filtering for dip strokes.
+        if stroke_type.lower() == "dip":
+            valid_points = points
+        else:
+            valid_points = [p for p in points if self.is_within_workspace(p[0], p[1], p[2])]
+        print(f"Remaining {len(valid_points)} valid points after filtering.")
 
         return valid_points
 
@@ -62,41 +68,31 @@ class StrokeGenerator:
         z_vals = [curve_depth - z for z in z_vals]
         return [(x, y, z) for x, y, z in zip(x_vals, y_vals, z_vals)]
 
-    def _generate_dip(self, params, num_points=5):
+    def _generate_dip(self, params):
         """
-        Generates a dip stroke trajectory.
-        Expected params (list): 
-            [pickup_x, pickup_y, pickup_z, safe_x, safe_y, safe_z, color_hex]
-        The function will generate a simple trajectory:
-         - From safe coordinate to pickup coordinate and back to safe coordinate.
+        Generates a dip stroke trajectory with a three-point sequence:
+          1. Start at the safe position (safe_x, safe_y, safe_z)
+          2. Move straight down to the dip (pickup) point (pickup_x, pickup_y, dip_z)
+          3. Return straight up back to the safe position
+        Expected params (list):
+            [pickup_x, pickup_y, dip_z, safe_x, safe_y, safe_z, color_hex]
         """
         print(f"Generating dip stroke with params: {params}")
         try:
             pickup_x = float(params[0])
             pickup_y = float(params[1])
-            pickup_z = float(params[2])
+            dip_z    = float(params[2])
             safe_x   = float(params[3])
             safe_y   = float(params[4])
             safe_z   = float(params[5])
-            # color_hex is params[6] but is not used for trajectory computation.
+            # color_hex (params[6]) is not used in trajectory computation.
         except (ValueError, IndexError) as e:
             print("Invalid parameters for dip stroke:", e)
             return []
 
-        pickup = (pickup_x, pickup_y, pickup_z)
-        safe = (safe_x, safe_y, safe_z)
-
-        # Generate trajectory: go from safe to pickup, then back to safe.
-        line_to_pickup = [(
-            safe[0] + (pickup[0] - safe[0]) * t,
-            safe[1] + (pickup[1] - safe[1]) * t,
-            safe[2] + (pickup[2] - safe[2]) * t
-        ) for t in np.linspace(0, 1, num_points)]
-        line_to_safe = [(
-            pickup[0] + (safe[0] - pickup[0]) * t,
-            pickup[1] + (safe[1] - pickup[1]) * t,
-            pickup[2] + (safe[2] - pickup[2]) * t
-        ) for t in np.linspace(0, 1, num_points)]
-        # Avoid duplicate pickup point.
-        trajectory = line_to_pickup + line_to_safe[1:]
+        trajectory = [
+            (safe_x, safe_y, safe_z),
+            (pickup_x, pickup_y, dip_z),
+            (safe_x, safe_y, safe_z)
+        ]
         return trajectory

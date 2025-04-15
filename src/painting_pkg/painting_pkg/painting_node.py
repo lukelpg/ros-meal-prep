@@ -1,3 +1,5 @@
+# painting_pkg/painting_node.py
+
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -23,16 +25,15 @@ class PaintingNode(Node):
         self.coordinate_compiler = CoordinateCompiler()
         self.instruction_publisher = InstructionPublisher()
 
-        # Subscribe to stroke commands (can include multiple strokes separated by semicolons).
+        # Subscribe to stroke commands (multiple commands separated by semicolons).
         self.create_subscription(String, 'paint_command', self.handle_command, 10)
+        self.strokes = []
+        self.current_stroke_index = 0
 
     def handle_command(self, msg):
-        """Processes a paint command to generate and publish coordinates.
-        Supports multiple stroke commands separated by semicolons.
-        """
+        """Processes a paint command to generate and publish coordinates."""
         self.get_logger().info(f"Received command: {msg.data}")
-
-        # Split incoming message into individual stroke commands.
+        # Split incoming message by semicolon.
         stroke_commands = [cmd.strip() for cmd in msg.data.split(';') if cmd.strip()]
         all_stroke_points = []
         
@@ -47,17 +48,15 @@ class PaintingNode(Node):
                 stroke_type, params, curve_depth
             )
             self.get_logger().info(
-                f"Generated {len(stroke_points)} stroke points for command '{stroke_command}': {stroke_points}"
+                f"Generated {len(stroke_points)} stroke points for command '{stroke_command}'"
             )
-
             if not stroke_points:
-                self.get_logger().error("No valid stroke points generated for command: " + stroke_command)
+                self.get_logger().error("No valid stroke points for command: " + stroke_command)
                 continue
-
             all_stroke_points.extend(stroke_points)
 
         if not all_stroke_points:
-            self.get_logger().error("No valid stroke points generated from any commands. Check stroke parameters.")
+            self.get_logger().error("No valid stroke points generated. Check parameters.")
             return
 
         processed_curve = self.curve_processor.process_curve(all_stroke_points)
@@ -71,9 +70,7 @@ class PaintingNode(Node):
         stroke_type = parts[0].strip().lower()
         
         if stroke_type == "arc":
-            # Expect at least 5 numeric parameters; optionally a 6th is curve depth.
             if len(parts) >= 7:
-                # Last parameter is curve depth.
                 param_values = [float(x.strip()) for x in parts[1:-1]]
                 curve_depth = float(parts[-1].strip())
             else:
@@ -85,7 +82,6 @@ class PaintingNode(Node):
             end_angle = param_values[4]
             params = [center, radius, start_angle, end_angle]
         elif stroke_type == "dip":
-            # Expect 7 parameters: pickup_x, pickup_y, pickup_z, safe_x, safe_y, safe_z, color_hex.
             if len(parts) < 8:
                 self.get_logger().error("Dip command requires 7 parameters.")
                 return None, None, None
@@ -93,9 +89,8 @@ class PaintingNode(Node):
             safe = (float(parts[4].strip()), float(parts[5].strip()), float(parts[6].strip()))
             color_hex = parts[7].strip()
             params = [pickup[0], pickup[1], pickup[2], safe[0], safe[1], safe[2], color_hex]
-            curve_depth = 0  # Not used for dip strokes.
+            curve_depth = 0
         else:
-            # For line strokes, assume an even number of parameters represent points.
             param_values = [float(x.strip()) for x in parts[1:]]
             if len(param_values) % 2 == 1:
                 curve_depth = param_values.pop()

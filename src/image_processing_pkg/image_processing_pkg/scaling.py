@@ -1,9 +1,6 @@
 # image_processing_pkg/scaling.py
 
 def scale_point(pt, image_dims, workspace_bounds):
-    """
-    Maps a point (x, y) from image coordinates to workspace coordinates.
-    """
     width, height = image_dims
     ws_x_min, ws_x_max = min(workspace_bounds["x"]), max(workspace_bounds["x"])
     ws_y_min, ws_y_max = min(workspace_bounds["y"]), max(workspace_bounds["y"])
@@ -13,10 +10,6 @@ def scale_point(pt, image_dims, workspace_bounds):
     return (scaled_x, scaled_y)
 
 def scale_stroke(stroke, image_dims, workspace_bounds):
-    """
-    Given a stroke definition string ("line" or "arc"), scale its coordinates to the workspace.
-    Returns a new stroke definition string with scaled coordinates.
-    """
     parts = [p.strip() for p in stroke.split(',')]
     cmd = parts[0].lower()
     if cmd == "line":
@@ -40,5 +33,8 @@ def scale_stroke(stroke, image_dims, workspace_bounds):
         scale_x = (ws_x_max - ws_x_min) / image_dims[0]
         scaled_r = r * scale_x
         return f"arc, {int(round(pt_center[0]))}, {int(round(pt_center[1]))}, {int(round(scaled_r))}, {start_angle}, {end_angle}, {brush}"
+    elif cmd == "dip":
+        # For dip commands, the coordinates are already in workspace units.
+        return stroke
     else:
         return stroke

@@ -131,7 +131,8 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     print_shape_counts(shape_counts)
     draw_thin_strokes_image(img, shapes, BRUSH_WIDTH, thinStrokesImage)
     
-    # Generate stroke definitions along with the mean color for each shape
+    # Generate stroke definitions along with the mean color for each shape.
+    # For each shape, first insert a dip stroke command, then the shape’s drawing strokes.
     all_strokes = []
     for approx, shape_name in shapes:
         # Compute the mean color for this shape using a mask.
@@ -147,11 +148,12 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
         pickup_coords = palette[required_color_key]["coord"]  # (x, y)
         
         # Create a dip stroke command.
-        # Format: 
-        #    dip, pickup_x, pickup_y, DIP_Z, safe_x, safe_y, SAFE_Z, color_hex
+        # Command format:
+        #   dip, pickup_x, pickup_y, DIP_Z, safe_x, safe_y, SAFE_Z, color_hex
+        # We assume that the safe coordinate is the same as the pickup coordinate.
         dip_command = f"dip, {pickup_coords[0]}, {pickup_coords[1]}, {DIP_Z}, {pickup_coords[0]}, {pickup_coords[1]}, {SAFE_Z}, {color_hex}"
         
-        # Start with the dip stroke for this shape.
+        # Insert the dip stroke at the start for this shape.
         shape_strokes = []
         shape_strokes.append((dip_command, shape_color))
         
@@ -160,7 +162,7 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
         for stroke in strokes:
             shape_strokes.append((stroke, shape_color))
         
-        # Append all strokes for this shape to the global list.
+        # Append all strokes for this shape.
         all_strokes.extend(shape_strokes)
     
     draw_workspace_strokes_image(all_strokes, image_dims, workspace_bounds, "workspace_strokes.png")
