@@ -10,39 +10,57 @@ from image_processing_pkg.scaling import scale_stroke
 class ImageProcessingNode(Node):
     def __init__(self):
         super().__init__('image_processing_node')
-        self.publisher_ = self.create_publisher(String, 'paint_command', 10)
+        self.pub = self.create_publisher(String, 'paint_command', 10)
         self.get_logger().info("Starting image processing...")
 
-        # Grab the strokes (with "dip,..." already at each shape’s start)
-        # Each entry is (stroke_string, shape_color)
-        self.strokes, self.image_dims = detect_shapes(
-            inputImage, epsilon_factor=0.01, min_area=100
-        )
-        self.index = 0
+        # 1) Run shape detection, which already inserts a "dip" command at the start of each shape
+        strokes, self.image_dims = detect_shapes(inputImage,
+                                                 epsilon_factor=0.01,
+                                                 min_area=100)
 
-        # Publish one command every 0.05s
-        self.timer = self.create_timer(0.05, self.publish_next)
+        # 2) Group into per‐shape lists: every time we see a "dip" we start a new group
+        self.shape_commands = []
+        current = []
+        for stroke_str, _color in strokes:
+            if stroke_str.strip().lower().startswith("dip"):
+                if current:
+                    self.shape_commands.append(current)
+                current = [stroke_str]
+            else:
+                current.append(stroke_str)
+        if current:
+            self.shape_commands.append(current)
 
-    def publish_next(self):
-        if self.index >= len(self.strokes):
-            self.get_logger().info("All strokes published. Shutting down node.")
+        self.shape_index = 0
+
+        # 3) Publish one shape‐batch every 0.05s
+        self.timer = self.create_timer(0.05, self.publish_next_shape)
+
+    def publish_next_shape(self):
+        if self.shape_index >= len(self.shape_commands):
+            self.get_logger().info("All shapes published. Shutting down.")
             self.timer.cancel()
             rclpy.shutdown()
             return
 
-        stroke_str, _ = self.strokes[self.index]
+        batch = self.shape_commands[self.shape_index]
+        out_cmds = []
+        for stroke_str in batch:
+            if stroke_str.strip().lower().startswith("dip"):
+                # pass the dip command unchanged (already in workspace coords)
+                out_cmds.append(stroke_str)
+            else:
+                # scale only line/arc strokes
+                out_cmds.append(scale_stroke(stroke_str,
+                                             self.image_dims,
+                                             workspace_bounds))
 
-        # Let your inserted dip commands pass unchanged
-        if stroke_str.strip().lower().startswith("dip"):
-            cmd = stroke_str
-        else:
-            # Scale only line/arc strokes
-            cmd = scale_stroke(stroke_str, self.image_dims, workspace_bounds)
+        msg = String()
+        msg.data = ";".join(out_cmds)
+        self.pub.publish(msg)
+        self.get_logger().info(f"Published paint_command: {msg.data}")
 
-        self.publisher_.publish(String(data=cmd))
-        self.get_logger().info(f"Published command: {cmd}")
-
-        self.index += 1
+        self.shape_index += 1
 
 def main(args=None):
     rclpy.init(args=args)

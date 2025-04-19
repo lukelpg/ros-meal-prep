@@ -18,12 +18,12 @@ workspace_bounds = {
 }
 
 palette = {
-    "red":    {"hex": "#DE0B0B", "coord": (-150, -1000)},
-    "green":  {"hex": "#106E29", "coord": (-300, -1000)},
-    "blue":   {"hex": "#0980DB", "coord": (-800, -1200)},
-    "yellow": {"hex": "#FCCB08", "coord": (-600, -1000)},
-    "black":   {"hex": "#000000", "coord": (-750, -1000)},
-    "purple":{"hex": "#55068A", "coord": (-900, -1000)}
+    "red":    {"hex": "#DE0B0B", "coord": (-150, -1210)},
+    "green":  {"hex": "#106E29", "coord": (-300, -1210)},
+    "blue":   {"hex": "#0980DB", "coord": (-840, -1210)},
+    "yellow": {"hex": "#FCCB08", "coord": (-600, -1210)},
+    "black":   {"hex": "#000000", "coord": (-750, -1210)},
+    "purple":{"hex": "#55068A", "coord": (-900, -1210)}
 }
 
 SAFE_Z = 2000
