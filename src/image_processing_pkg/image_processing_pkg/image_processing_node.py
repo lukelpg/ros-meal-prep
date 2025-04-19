@@ -3,9 +3,14 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
+
 from image_processing_pkg.image_processor import detect_shapes
-from image_processing_pkg.config import workspace_bounds, inputImage
+from image_processing_pkg.config import (
+    inputImage, workspace_bounds,
+    DIP_INTERVAL, DIP_Z, SAFE_Z, palette
+)
 from image_processing_pkg.scaling import scale_stroke
+from image_processing_pkg.color_utils import get_closest_palette_color
 
 class ImageProcessingNode(Node):
     def __init__(self):
@@ -13,54 +18,55 @@ class ImageProcessingNode(Node):
         self.pub = self.create_publisher(String, 'paint_command', 10)
         self.get_logger().info("Starting image processing...")
 
-        # 1) Run shape detection, which already inserts a "dip" command at the start of each shape
-        strokes, self.image_dims = detect_shapes(inputImage,
-                                                 epsilon_factor=0.01,
-                                                 min_area=100)
+        # Flat list of (stroke_str, shape_color)
+        self.strokes, self.image_dims = detect_shapes(
+            inputImage, epsilon_factor=0.01, min_area=100
+        )
 
-        # 2) Group into per‐shape lists: every time we see a "dip" we start a new group
-        self.shape_commands = []
-        current = []
-        for stroke_str, _color in strokes:
-            if stroke_str.strip().lower().startswith("dip"):
-                if current:
-                    self.shape_commands.append(current)
-                current = [stroke_str]
-            else:
-                current.append(stroke_str)
-        if current:
-            self.shape_commands.append(current)
+        self.index = 0
+        self.waiting_for_dip = False
 
-        self.shape_index = 0
+        # Publish every 0.05s
+        self.timer = self.create_timer(0.05, self.publish_next)
 
-        # 3) Publish one shape‐batch every 0.05s
-        self.timer = self.create_timer(0.05, self.publish_next_shape)
-
-    def publish_next_shape(self):
-        if self.shape_index >= len(self.shape_commands):
-            self.get_logger().info("All shapes published. Shutting down.")
+    def publish_next(self):
+        # Done?
+        if self.index >= len(self.strokes):
+            self.get_logger().info("All strokes done. Shutting down.")
             self.timer.cancel()
             rclpy.shutdown()
             return
 
-        batch = self.shape_commands[self.shape_index]
-        out_cmds = []
-        for stroke_str in batch:
-            if stroke_str.strip().lower().startswith("dip"):
-                # pass the dip command unchanged (already in workspace coords)
-                out_cmds.append(stroke_str)
-            else:
-                # scale only line/arc strokes
-                out_cmds.append(scale_stroke(stroke_str,
-                                             self.image_dims,
-                                             workspace_bounds))
+        stroke_def, shape_color = self.strokes[self.index]
 
-        msg = String()
-        msg.data = ";".join(out_cmds)
-        self.pub.publish(msg)
-        self.get_logger().info(f"Published paint_command: {msg.data}")
+        # Should we dip before this stroke?
+        if self.index % DIP_INTERVAL == 0 and not self.waiting_for_dip:
+            # Build dip command for this shape color
+            key = get_closest_palette_color(shape_color)
+            x, y = palette[key]['coord']
+            hexcol = palette[key]['hex']
+            dip_cmd = f"dip, {x}, {y}, {DIP_Z}, {x}, {y}, {SAFE_Z}, {hexcol}"
 
-        self.shape_index += 1
+            self.pub.publish(String(data=dip_cmd))
+            self.get_logger().info(f"Published dip: {dip_cmd}")
+
+            # Mark that we've done the dip; next tick will send the stroke itself
+            self.waiting_for_dip = True
+            return
+
+        # Otherwise, send the actual stroke
+        # (if it somehow is a dip text, just pass through; else scale)
+        if stroke_def.strip().lower().startswith("dip"):
+            cmd = stroke_def
+        else:
+            cmd = scale_stroke(stroke_def, self.image_dims, workspace_bounds)
+
+        self.pub.publish(String(data=cmd))
+        self.get_logger().info(f"Published stroke: {cmd}")
+
+        # Advance to next stroke and reset dip flag
+        self.index += 1
+        self.waiting_for_dip = False
 
 def main(args=None):
     rclpy.init(args=args)

@@ -26,8 +26,11 @@ palette = {
     "purple":{"hex": "#55068A", "coord": (-900, -1210)}
 }
 
-SAFE_Z = 2000
-DIP_Z = 700 
+SAFE_Z = 1000
+DIP_Z = 600
 
 # Brush width used for stroke spacing
 BRUSH_WIDTH = 45
+
+# How many strokes between paint pickups
+DIP_INTERVAL = 2
