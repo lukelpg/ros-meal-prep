@@ -47,7 +47,9 @@ def apply_morphological_operations(edges):
     return closed
 
 def find_contours(closed):
-    contours, _ = cv2.findContours(closed.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(closed.copy(),
+                                  cv2.RETR_EXTERNAL,
+                                  cv2.CHAIN_APPROX_SIMPLE)
     print(f"Found {len(contours)} contours.")
     return contours
 
@@ -121,7 +123,7 @@ def detect_shapes(image_path, epsilon_factor=0.01, min_area=500):
     return shape_stroke_groups, dims
 
 if __name__=="__main__":
-    batches, dims = detect_shapes(inputImage, epsilon_factor=0.1, min_area=100)
+    batches, dims = detect_shapes(inputImage, epsilon_factor=0.2, min_area=1000)
     for i,grp in enumerate(batches):
         print(f"Shape {i}:")
         for stroke,color in grp:
